@@ -1,0 +1,4 @@
+var Settings = {
+  defaultDoc: 'About'
+};
+
