@@ -10,9 +10,12 @@ D3_LIBRARY_FILES = \
 	$(D3SRC)/start.js \
 	$(D3SRC)/compat/index.js \
 	$(D3SRC)/selection/selection.js \
-	$(D3SRC)/arrays/range.js \
 	$(D3SRC)/transition/index.js \
 	$(D3SRC)/event/mouse.js \
+	$(D3SRC)/scale/linear.js \
+	$(D3SRC)/behavior/zoom.js \
+	$(D3SRC)/layout/tree.js \
+	$(D3SRC)/svg/diagonal.js \
 	$(D3SRC)/end.js
 
 smash: $(D3_LIBRARY_FILES)

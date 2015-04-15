@@ -10,6 +10,7 @@ var TreeRenderer = require('./treerenderer');
 var idmaker = require('idmaker');
 var D3SprigBridge = require('./d3sprigbridge');
 var createCamera = require('./camera');
+var d3 = require('./lib/d3-small');
 
 function createSprigot(opts) {
 // Expected in opts: doc, loadDone.

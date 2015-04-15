@@ -2,6 +2,7 @@ var createSprigotBaseMixin = require('./sprigotbasemixin');
 var loadATypeKit = require('./load_a_typekit');
 var createStore = require('./store');
 var idmaker = require('idmaker');
+var d3 = require('./lib/d3-small');
 
 function createNewDocForm(opts) {
 

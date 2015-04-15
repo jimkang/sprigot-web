@@ -1,4 +1,5 @@
 // TODO: Replace with svgcamera.
+var d3 = require('./lib/d3-small');
 
 function createCamera(scaleExtent) {
 

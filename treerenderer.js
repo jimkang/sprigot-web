@@ -1,3 +1,5 @@
+var d3 = require('./lib/d3-small');
+
 var TreeRenderer = {
   treeLayout: null,
   diagonalProjection: null,

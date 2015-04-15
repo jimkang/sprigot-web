@@ -1,5 +1,6 @@
 var OKCancelDialog = require('./okcanceldialog');
 var idmaker = require('idmaker');
+var d3 = require('./lib/d3-small');
 
 var TextStuff = {
   graph: null, 
