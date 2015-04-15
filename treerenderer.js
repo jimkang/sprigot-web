@@ -251,3 +251,5 @@ function wrap(text, getTextData, width) {
     }
   });
 }
+
+module.exports = TreeRenderer;

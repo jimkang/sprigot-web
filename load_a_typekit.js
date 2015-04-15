@@ -46,3 +46,4 @@ function loadATypeKit(typekitURL, done) {
   1000);
 }
 
+module.exports = loadATypeKit;

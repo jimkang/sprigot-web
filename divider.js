@@ -75,3 +75,5 @@ Divider.hideGraph = function hideGraph() {
 
 return Divider;
 }
+
+module.exports = createDivider;

@@ -43,3 +43,5 @@ baseMixin.setUpOuterContainer = function setUpOuterContainer(cssFilename,
 
 return baseMixin;
 }
+
+module.exports = createSprigotBaseMixin;

@@ -1,3 +1,5 @@
+// TODO: Replace with svgcamera.
+
 function createCamera(scaleExtent) {
 
 var Camera = {
@@ -213,3 +215,5 @@ var Camera = {
 
 return Camera;
 }
+
+module.exports = createCamera;

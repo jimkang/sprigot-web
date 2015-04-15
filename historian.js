@@ -1,3 +1,5 @@
+var Settings = require('./sprigotclient_settings');
+
 var Historian = {
   docNav: null,
   docId: null
@@ -46,3 +48,4 @@ Historian.syncURLToSprigId = function syncURLToSprigId(sprigId) {
   null, newURL);  
 };
 
+module.exports = Historian;

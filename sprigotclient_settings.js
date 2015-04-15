@@ -1,4 +1,4 @@
-var Settings = {
+module.exports = {
   defaultDoc: 'About'
 };
 

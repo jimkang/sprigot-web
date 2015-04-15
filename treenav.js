@@ -1,3 +1,5 @@
+var D3SprigBridge = require('./d3sprigbridge');
+
 // treerenderer is where the click events are actually set up.
 
 function createTreeNav() {
@@ -158,3 +160,5 @@ TreeNav.respondToRightArrow = function respondToRightArrow() {
 
 return TreeNav;
 }
+
+module.exports = createTreeNav;

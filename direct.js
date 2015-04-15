@@ -1,3 +1,9 @@
+var createNewDocForm = require('./newdoc');
+var createSpriglog = require('./spriglog');
+var createSprigot = require('./sprigot');
+var createStore = require('./store');
+var Settings = require('./sprigotclient_settings');
+
 var Director = {
   sprigController: null,
   initialTargetSprigId: null,
@@ -118,4 +124,4 @@ Director.dictFromQueryString = function dictFromQueryString(queryString) {
   return queryHash;
 };
 
-Director.init();
+module.exports = Director;

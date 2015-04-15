@@ -1,3 +1,8 @@
+var createSprigotBaseMixin = require('./sprigotbasemixin');
+var loadATypeKit = require('./load_a_typekit');
+var Historian = require('./historian');
+var createStore = require('./store');
+
 function createSpriglog(opts) {
 // Expected in opts: doc, loadDone.
 
@@ -129,3 +134,5 @@ Spriglog.respondToScroll = function respondToScroll() {
 
 return Spriglog;
 }
+
+module.exports = createSpriglog;

@@ -47,3 +47,4 @@ APIEnvoy.addRequestToQueue = function queueForBatchedRequest(
 return APIEnvoy;
 }
 
+module.exports = createAPIEnvoy;

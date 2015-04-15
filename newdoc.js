@@ -1,3 +1,8 @@
+var createSprigotBaseMixin = require('./sprigotbasemixin');
+var loadATypeKit = require('./load_a_typekit');
+var createStore = require('./store');
+var idmaker = require('idmaker');
+
 function createNewDocForm(opts) {
 
 var newDocForm = {
@@ -61,7 +66,7 @@ newDocForm.load = function load() {
         var store = createStore();
         var newDoc = {
           id: formValues.name,
-          rootSprig: uid(8),
+          rootSprig: idmaker.randomId(8),
           authors: [
             formValues.author
           ],
@@ -161,3 +166,5 @@ function getFormValues(formEl, fields) {
 
 return newDocForm;
 }
+
+module.exports = createNewDocForm;

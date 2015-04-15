@@ -1,7 +1,6 @@
-if (typeof module === 'object') {
-  // Node
-  var _ = require('underscore');
-}
+var _ = require('lodash');
+
+// TODO: Find out: Is this really used on the server side?
 
 D3SprigBridge = {
   validSprigPropertyList: [
@@ -196,7 +195,4 @@ function flattenTreeDepthFirst(sprigTree) {
   return sprigs;
 };
 
-if (typeof module === 'object') {
-  // Node
-  module.exports = D3SprigBridge;
-}
+module.exports = D3SprigBridge;

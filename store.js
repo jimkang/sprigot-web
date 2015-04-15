@@ -1,3 +1,8 @@
+var TextStuff = require('./textstuff');
+var createAPIEnvoy = require('./apienvoy');
+var idmaker = require('idmaker');
+var D3SprigBridge = require('./d3sprigbridge');
+
 function createStore() {
 
 var Store = {
@@ -197,8 +202,8 @@ Store.getSprigList = function getSprigList(docId, format, outerDone) {
 
 Store.createNewDoc = function createNewDoc(docParams, rootSprigParams, done) {
   var requestBody = {}
-  var docCreateReqId = 'docCreateReq' + uid(4);
-  var rootSprigSaveReqId = 'rootSprigSaveReq' + uid(4);
+  var docCreateReqId = 'docCreateReq' + idmaker.randomId(4);
+  var rootSprigSaveReqId = 'rootSprigSaveReq' + idmaker.randomId(4);
 
   requestBody[docCreateReqId] = {
     op: 'saveDoc',
@@ -216,3 +221,4 @@ Store.createNewDoc = function createNewDoc(docParams, rootSprigParams, done) {
 return Store;
 }
 
+module.exports = createStore;

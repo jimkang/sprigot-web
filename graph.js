@@ -1,3 +1,8 @@
+var createCollisionFinder = require('./collisionfinder');
+var createTreeNav = require('./treenav');
+var TreeRenderer = require('./treerenderer');
+var D3SprigBridge = require('./d3sprigbridge');
+
 function createGraph() {
 
 var Graph = {
@@ -136,7 +141,7 @@ Graph.loadNodeTreeToGraph = function loadNodeTreeToGraph(nodeTree,
     setTimeout(function initialPan() {
       this.panToRoot();
       if (this.focusNode) {
-        Historian.syncURLToSprigId(this.focusNode.id);
+        this.historian.syncURLToSprigId(this.focusNode.id);
       }  
     }
     .bind(this),
@@ -312,3 +317,4 @@ Graph.moveNodeToNewParent = function moveNodeToNewParent(child, parent) {
 return Graph;
 }
 
+module.exports = createGraph;

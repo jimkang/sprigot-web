@@ -1,3 +1,6 @@
+var OKCancelDialog = require('./okcanceldialog');
+var idmaker = require('idmaker');
+
 var TextStuff = {
   graph: null, 
   treeRenderer: null,
@@ -220,7 +223,7 @@ TextStuff.disableFindUnreadLink = function disableFindUnreadLink() {
 /* Editing */
 
 TextStuff.makeId = function makeId(lengthOfRandomPart) {
-  return 's' + uid(lengthOfRandomPart);
+  return 's' + idmaker.randomId(lengthOfRandomPart);
 }
 
 TextStuff.changeEditMode = function changeEditMode(editable, skipSave) {
@@ -313,3 +316,4 @@ TextStuff.startEditing = function startEditing() {
   }
 };
 
+module.exports = TextStuff;

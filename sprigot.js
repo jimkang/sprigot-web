@@ -1,3 +1,16 @@
+var createSprigotBaseMixin = require('./sprigotbasemixin');
+var createStrokeRouter = require('strokerouter');
+var loadATypeKit = require('./load_a_typekit');
+var Historian = require('./historian');
+var createDivider = require('./divider');
+var TextStuff = require('./textstuff');
+var createStore = require('./store');
+var createGraph = require('./graph');
+var TreeRenderer = require('./treerenderer');
+var idmaker = require('idmaker');
+var D3SprigBridge = require('./d3sprigbridge');
+var createCamera = require('./camera');
+
 function createSprigot(opts) {
 // Expected in opts: doc, loadDone.
 // Optional in opts: initialTargetSprigId.
@@ -191,8 +204,8 @@ Sprigot.respondToDeleteSprigCmd = function respondToDeleteSprigCmd() {
 
 Sprigot.respondToNewSprigotCmd = function respondToNewSprigotCmd() {
   var newDoc = {
-    id: uid(8),
-    rootSprig: uid(8),
+    id: idmaker.randomId(8),
+    rootSprig: idmaker.randomId(8),
     authors: [
       'deathmtn'
     ],
@@ -256,3 +269,5 @@ Sprigot.tagElementsWithCSSHackClasses = function tagElementsWithCSSHackClasses()
 
 return Sprigot;
 }
+
+module.exports = createSprigot;

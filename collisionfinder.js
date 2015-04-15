@@ -38,3 +38,5 @@ collisionFinder.elementsHittingEl = function elementsHittingEl(el) {
 
 return collisionFinder;
 }
+
+module.exports = createCollisionFinder;

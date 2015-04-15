@@ -36,3 +36,4 @@ function respondToCancelClick() {
   d3.select(this.parentSelector).select('#OKCancelDialog').remove();
 };
 
+module.exports = OKCancelDialog;
