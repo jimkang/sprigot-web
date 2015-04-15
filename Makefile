@@ -1,5 +1,8 @@
-run:
-	wzrd index.js
+BIN = node_modules/.bin
+
+DEVTAGS = <script\ src="pch.js"><\/script><script\ src="index.js"><\/script>
+PRODUCTIONTAGS = <script\ src="sprigot-web.js"><\/script>
+PRODDIR = ../sprigotclient
 
 test:
 	node tests/basictests.js
@@ -19,11 +22,7 @@ D3_LIBRARY_FILES = \
 	$(D3SRC)/end.js
 
 smash: $(D3_LIBRARY_FILES)
-	node_modules/.bin/smash $(D3_LIBRARY_FILES) | \
-	node_modules/.bin/uglifyjs - -c -m -o lib/d3-small.js
-
-smash-debug: $(D3_LIBRARY_FILES)
-	node_modules/.bin/smash $(D3_LIBRARY_FILES) > lib/d3-small.js
+	$(BIN)/smash $(D3_LIBRARY_FILES) > lib/d3-small.js
 
 run:
 	wzrd index.js -- \
@@ -31,7 +30,18 @@ run:
 		-x lodash
 
 pch: smash # smash-debug
-	node_modules/.bin/browserify \
+	$(BIN)/browserify \
 		lib/d3-small.js \
 		-r lodash \
 		-o pch.js
+
+build: smash
+	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m -o sprigot-web.js
+
+switch-index-to-production:
+	sed 's/$(DEVTAGS)/$(PRODUCTIONTAGS)/' index.html | tee index.html
+
+deploy: build switch-index-to-production
+	cp sprigot-web.js $(PRODDIR) && \
+	cp *.css $(PRODDIR) && \
+	cp index.html $(PRODDIR)
