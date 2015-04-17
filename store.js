@@ -6,7 +6,7 @@ var D3SprigBridge = require('./d3sprigbridge');
 function createStore() {
 
 var Store = {
-  // apienvoy: createAPIEnvoy('http://127.0.0.1:3000')
+  // apienvoy: createAPIEnvoy('http://127.0.0.1:3003')
   apienvoy: createAPIEnvoy('http://192.241.250.38:3003')
 };
 // serverURL: 'http://192.168.1.104:3000'

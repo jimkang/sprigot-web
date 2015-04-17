@@ -17,6 +17,7 @@ D3_LIBRARY_FILES = \
 	$(D3SRC)/event/mouse.js \
 	$(D3SRC)/scale/linear.js \
 	$(D3SRC)/behavior/zoom.js \
+	$(D3SRC)/behavior/drag.js \
 	$(D3SRC)/layout/tree.js \
 	$(D3SRC)/svg/diagonal.js \
 	$(D3SRC)/end.js
@@ -27,11 +28,12 @@ smash: $(D3_LIBRARY_FILES)
 run:
 	wzrd index.js -- \
 		-d \
-		-x lodash
+		-x lodash \
+		-x ./lib/d3-small.js
 
 pch: smash # smash-debug
 	$(BIN)/browserify \
-		lib/d3-small.js \
+		-r ./lib/d3-small.js \
 		-r lodash \
 		-o pch.js
 

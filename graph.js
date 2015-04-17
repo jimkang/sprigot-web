@@ -3,6 +3,7 @@ var createTreeNav = require('./treenav');
 var TreeRenderer = require('./treerenderer');
 var D3SprigBridge = require('./d3sprigbridge');
 var d3 = require('./lib/d3-small');
+var _ = require('lodash');
 
 function createGraph() {
 

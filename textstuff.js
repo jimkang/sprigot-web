@@ -1,6 +1,7 @@
-var OKCancelDialog = require('./okcanceldialog');
 var idmaker = require('idmaker');
 var d3 = require('./lib/d3-small');
+var createStrokeRouter = require('strokerouter');
+var renderAdminPanel = require('./render-admin-panel');
 
 var TextStuff = {
   graph: null, 
@@ -16,18 +17,11 @@ var TextStuff = {
   textcontent: null,
   titleField: null,
   contentZone: null,
-  addButton: null,
-  deleteButton: null,
-  newSprigotButton: null,
-  emphasizeCheckbox: null,
-  tagField: null,
-  formatField: null,
   findUnreadLink: null,
   showGraphLink: null,
   downLink: null,
-  OKCancelDialog: null,
-  // editAvailable: true
-  editAvailable: false
+  editAvailable: true
+  // editAvailable: false
 };
 
 TextStuff.init = function init(sprigotSel, graph, treeRenderer, store, 
@@ -56,42 +50,15 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, store,
     .attr('tabindex', 0);
 
   if (this.editAvailable) {
-    this.addButton = this.textpane.append('button').text('+')
-      .classed('newsprigbutton', true).classed('editcontrol', true);
-    this.deleteButton = this.textpane.append('button').text('-')
-      .classed('deletesprigbutton', true).classed('editcontrol', true);
-    this.textpane.append('label').text('Emphasize')
-      .classed('editcontrol', true);
-    this.emphasizeCheckbox = this.textpane.append('input').attr({
-      type: 'checkbox',
-      id: 'emphasize'
-    })
-    .classed('editcontrol', true);
-    
-    this.newSprigotButton = this.textpane.append('button').text('New Sprigot!')
-      .classed('editcontrol', true);
-
-    this.textpane.append('label').text('Tags').classed('editcontrol', true);
-
-    function eatEvent() {
-      // d3.event will be a valid object at runtime.
-      d3.event.stopPropagation();
-    }
-
-    this.tagField = this.textpane.append('input').attr({
-      value: 'tagsgohere'
-    })
-    .classed('editcontrol', true)
-    .on('keyup', eatEvent)
-    .on('keydown', eatEvent);
-
-    this.textpane.append('label').text('Formats').classed('editcontrol', true);
-    this.formatField = this.textpane.append('input').attr({
-      value: ''
-    })
-    .classed('editcontrol', true)
-    .on('keyup', eatEvent)
-    .on('keydown', eatEvent);
+    renderAdminPanel({
+      root: this.textpane,
+      responders: {
+        respondToEmphasisCheckChange: this.respondToEmphasisCheckChange.bind(this),
+        respondToAddChildSprigCmd: sprigot.respondToAddChildSprigCmd.bind(sprigot),
+        respondToNewSprigotCmd: sprigot.respondToNewSprigotCmd.bind(sprigot),
+        respondToDeleteSprigCmd: sprigot.respondToDeleteSprigCmd.bind(sprigot)
+      }
+    });
   }
 
   this.initFindUnreadLink();
@@ -103,20 +70,10 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, store,
     this.textcontent.on('click', this.startEditing.bind(this));
     this.titleField.on('click', this.startEditing.bind(this));
 
-    this.addButton.on('click', 
-      this.sprigot.respondToAddChildSprigCmd.bind(this.sprigot));
-    this.deleteButton.on('click', this.showDeleteSprigDialog.bind(this));
-
-    this.emphasizeCheckbox.on('change', 
-      this.respondToEmphasisCheckChange.bind(this));
-
     this.contentZoneStrokeRouter = createStrokeRouter(this.contentZone);
     this.contentZoneStrokeRouter.routeKeyDown('enter', ['meta'], 
       this.endEditing.bind(this));
     this.contentZoneStrokeRouter.absorbAllKeyUpEvents = true;
-
-    this.newSprigotButton.on('click', 
-      this.sprigot.respondToNewSprigotCmd.bind(this.sprigot));
   }
 }
 
@@ -138,10 +95,12 @@ TextStuff.syncTextpaneWithTreeNode = function syncTextpaneWithTreeNode(treeNode)
   this.titleField.html(treeNode.title);
 
   if (this.editAvailable) {
-    this.emphasizeCheckbox.node().checked = this.graph.focusNode.emphasize;
-    this.tagField.node().value = treeNode.tags ? treeNode.tags.join(' ') : '';
-    this.formatField.node().value =
-      treeNode.formats ? treeNode.formats.join(' ') : '';
+    var eventData = {
+      detail: {
+        focusNode: treeNode
+      }
+    };
+    document.dispatchEvent(new CustomEvent('node-focus-change', eventData));
   }
 
   if (this.sprigot.isMobile()) {
@@ -286,18 +245,6 @@ TextStuff.endEditing = function endEditing() {
   if (this.contentZone.classed('editing')) {
     this.changeEditMode(false);
   }
-}
-
-TextStuff.showDeleteSprigDialog = function showDeleteSprigDialog() {
-  this.OKCancelDialog = new OKCancelDialog('#questionDialog', 
-    'Do you want to delete this?', 'Delete', 
-    this.sprigot.respondToDeleteSprigCmd.bind(this.sprigot),
-    function removeOKCancelDialog() {
-      delete this.OKCancelDialog;
-    }
-    .bind(this)
-  );
-  this.OKCancelDialog.show();  
 }
 
 /* Responders */

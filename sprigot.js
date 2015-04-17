@@ -128,8 +128,8 @@ Sprigot.initDocEventResponders = function initDocEventResponders() {
     this.respondToAddChildSprigCmd.bind(this));
   this.docStrokeRouter.routeKeyUp('u', null, 
     this.respondToFindUnreadCmd.bind(this));
-  this.docStrokeRouter.routeKeyDown('backspace', ['meta'], 
-    TextStuff.showDeleteSprigDialog.bind(TextStuff));
+  // this.docStrokeRouter.routeKeyDown('backspace', ['meta'], 
+  //   TextStuff.showDeleteSprigDialog.bind(TextStuff));
 };
 
 Sprigot.respondToAddChildSprigCmd = function respondToAddChildSprigCmd() {
