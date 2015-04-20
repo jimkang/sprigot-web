@@ -215,23 +215,12 @@ TextStuff.changeEditMode = function changeEditMode(editable, skipSave) {
       d3.select('#' + editedNode.id + ' text').text(editedNode.title);
     }
 
-    // Temp. hack.
-    var tagFieldValue = this.tagField.node().value;
-    if (tagFieldValue.length > 0) {
-      var tags = tagFieldValue.split(' ');
-      editedNode.tags = tags;
-    }
-    else {
-      editedNode.tags = [];
-    }
-    var formatFieldValue = this.formatField.node().value;
-    if (formatFieldValue.length > 0) {
-      var formats = formatFieldValue.split(' ');
-      editedNode.formats = formats;
-    }
-    else {
-      editedNode.formats = [];
-    }
+    var eventData = {
+      detail: {
+        focusNode: editedNode
+      }
+    };
+    document.dispatchEvent(new CustomEvent('node-focus-change', eventData));
 
     this.textcontent.datum(editedNode);
     this.titleField.datum(editedNode);
