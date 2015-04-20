@@ -1,8 +1,10 @@
 var d3 = require('./lib/d3-small');
 var OKCancelDialog = require('./okcanceldialog');
+var createControlRenderer = require('./control-renderer');
 
 function renderAdminPanel(opts) {
   var root;
+  var controlRenderer;
 
   var respondToEmphasisCheckChange;
   var respondToAddChildSprigCmd;
@@ -24,25 +26,39 @@ function renderAdminPanel(opts) {
     throw new Error('No root passed to renderAdminPanel.');
   }
 
-  var addButton;
-  var deleteButton;
+
+  var listRoot = root.select('#admin-control-root');
+  if (listRoot.empty()) {
+    listRoot = root.append('ul').attr('id', 'admin-control-root');
+  }
+
+  var controlRenderer = createControlRenderer({
+    root: listRoot,
+    baseElementType: 'li',
+    baseClass: 'admin-control'
+  });
+
+  controlRenderer.render([
+    {
+      id: 'newsprigbutton',
+      elementType: 'button',
+      text: '+',
+      onClick: respondToAddChildSprigCmd
+    },
+    {
+      id: 'deletesprigbutton',
+      elementType: 'button',
+      text: '-',
+      onClick: respondToDeleteSprigCmd
+    }
+  ]);
+
   var emphasizeCheckbox;
 
   addElements();
   addEventHandlers();
 
   function addElements() {
-    addButton = root.append('button')
-      .text('+')
-      .classed({
-        newsprigbutton: true,
-        editcontrol: true
-      });
-
-    deleteButton = root.append('button')
-      .text('-')
-      .classed('deletesprigbutton', true).classed('editcontrol', true);
-
     root.append('label')
       .text('Emphasize')
       .classed('editcontrol', true);
@@ -54,9 +70,9 @@ function renderAdminPanel(opts) {
       })
       .classed('editcontrol', true);
     
-    newSprigotButton = root.append('button')
-      .text('New Sprigot!')
-      .classed('editcontrol', true);
+    // newSprigotButton = root.append('button')
+    //   .text('New Sprigot!')
+    //   .classed('editcontrol', true);
 
     root.append('label')
       .text('Tags')
@@ -84,10 +100,8 @@ function renderAdminPanel(opts) {
   }
 
   function addEventHandlers() {
-    addButton.on('click', respondToAddChildSprigCmd);
-    deleteButton.on('click', showDeleteSprigDialog);
     emphasizeCheckbox.on('change', respondToEmphasisCheckChange);
-    newSprigotButton.on('click', respondToNewSprigotCmd);
+    // newSprigotButton.on('click', respondToNewSprigotCmd);
 
     document.addEventListener('node-focus-change', respondToFocusChange);
   }

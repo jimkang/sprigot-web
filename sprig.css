@@ -199,6 +199,14 @@ section {
   height: 100%;
 }
 
+.fade-out {
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+
+#admin-control-root {
+  list-style-type: none;
+}
 
 /* Firefox */
 @-moz-document url-prefix(http) {
