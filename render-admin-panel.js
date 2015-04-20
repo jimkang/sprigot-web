@@ -10,6 +10,8 @@ function renderAdminPanel(opts) {
   var respondToAddChildSprigCmd;
   var respondToNewSprigotCmd;
   var respondToDeleteSprigCmd;
+  var respondToMoveChildLeftCmd;
+  var respondToMoveChildRightCmd;
 
   if (opts) {
     root = opts.root;
@@ -18,7 +20,9 @@ function renderAdminPanel(opts) {
       respondToEmphasisCheckChange = opts.responders.respondToEmphasisCheckChange;
       respondToAddChildSprigCmd = opts.responders.respondToAddChildSprigCmd;
       respondToNewSprigotCmd = opts.responders.respondToNewSprigotCmd;
-      respondToDeleteSprigCmd = opts.responders.respondToDeleteSprigCmd;      
+      respondToDeleteSprigCmd = opts.responders.respondToDeleteSprigCmd;
+      respondToMoveChildLeftCmd = opts.responders.respondToMoveChildLeftCmd;
+      respondToMoveChildRightCmd = opts.responders.respondToMoveChildRightCmd;
     }
   }
 
@@ -50,6 +54,18 @@ function renderAdminPanel(opts) {
       elementType: 'button',
       text: '-',
       onClick: respondToDeleteSprigCmd
+    },
+    {
+      id: 'move-left-button',
+      elementType: 'button',
+      text: 'Move left',
+      onClick: respondToMoveChildLeftCmd
+    },
+    {
+      id: 'move-right-button',
+      elementType: 'button',
+      text: 'Move right',
+      onClick: respondToMoveChildRightCmd
     },
     {
       id: 'newsprigotbutton',

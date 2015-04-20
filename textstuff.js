@@ -56,7 +56,9 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, store,
         respondToEmphasisCheckChange: this.respondToEmphasisCheckChange.bind(this),
         respondToAddChildSprigCmd: sprigot.respondToAddChildSprigCmd.bind(sprigot),
         respondToNewSprigotCmd: sprigot.respondToNewSprigotCmd.bind(sprigot),
-        respondToDeleteSprigCmd: sprigot.respondToDeleteSprigCmd.bind(sprigot)
+        respondToDeleteSprigCmd: sprigot.respondToDeleteSprigCmd.bind(sprigot),
+        respondToMoveChildLeftCmd: sprigot.respondToMoveChildLeftCmd.bind(sprigot),
+        respondToMoveChildRightCmd: sprigot.respondToMoveChildRightCmd.bind(sprigot)
       }
     });
   }

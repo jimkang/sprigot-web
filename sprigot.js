@@ -253,6 +253,21 @@ Sprigot.respondToSwitchToGraphCmd = function respondToSwitchToGraphCmd() {
   }
 };
 
+Sprigot.respondToMoveChildLeftCmd = function respondToMoveChildLeftCmd() {
+  this.moveFocusNodeInDirection(-1);
+}
+
+Sprigot.respondToMoveChildRightCmd = function respondToMoveChildRightCmd() {
+  this.moveFocusNodeInDirection(1);
+}
+
+Sprigot.moveFocusNodeInDirection = function moveFocusNodeInDirection(direction) {
+  this.graph.swapNodeWithSibling(this.graph.focusNode, direction);
+  TreeRenderer.update(
+    this.graph.nodeRoot, this.graph.treeRenderer.treeNodeAnimationDuration
+  );
+}
+
 Sprigot.isMobile = function isMobile() {
   var isMobileMediaQuery = 'only screen and (max-device-height: 568px)';
   return (window.matchMedia(isMobileMediaQuery).matches);
