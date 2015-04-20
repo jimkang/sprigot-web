@@ -25,6 +25,7 @@ function createControlRenderer(opts) {
   }
 
   var getText = accessor('text');
+  var getId = accessor();
 
   // Warning: Doesn't use namespaces right now.
   function createElement(controlDef) {
@@ -39,10 +40,8 @@ function createControlRenderer(opts) {
       .append(baseElementType)
       .append(createElement)
       .classed(baseClass, true)
+      .attr('id', getId)
       .on('click', respondToClick);
-
-    // addButton.on('click', respondToAddChildSprigCmd);
-    // deleteButton.on('click', showDeleteSprigDialog);
 
     controlHousings.exit()
       .classed('fade-out', true)

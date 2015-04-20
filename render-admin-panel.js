@@ -50,67 +50,74 @@ function renderAdminPanel(opts) {
       elementType: 'button',
       text: '-',
       onClick: respondToDeleteSprigCmd
+    },
+    {
+      id: 'newsprigotbutton',
+      elementType: 'button',
+      text: 'New Document',
+      onClick: respondToNewSprigotCmd
+    },
+    {
+      id: 'tags-label',
+      elementType: 'label',
+      text: 'Tags'
+    },
+    {
+      id: 'tags-field',
+      elementType: 'input',
+      attributes: {
+        value: 'tags go here'
+      },
+      onKeyUp: eatEvent,
+      onKeyDown: eatEvent
+    },
+    {
+      id: 'format-label',
+      elementType: 'label',
+      text: 'Formats'
+    },
+    {
+      id: 'formats-field',
+      elementType: 'input',
+      attributes: {
+        value: ''
+      },
+      onKeyUp: eatEvent,
+      onKeyDown: eatEvent
     }
   ]);
 
-  var emphasizeCheckbox;
+  var emphasizeCheckbox = addEmphasizeCheckbox();
 
-  addElements();
-  addEventHandlers();
+  document.addEventListener('node-focus-change', respondToFocusChange);
 
-  function addElements() {
-    root.append('label')
+  function addEmphasizeCheckbox() {
+    var emphasisContainer = listRoot.append('li');
+    emphasisContainer.append('label')
       .text('Emphasize')
       .classed('editcontrol', true);
 
-    emphasizeCheckbox = root.append('input')
+    emphasizeCheckbox = emphasisContainer.append('input')
       .attr({
         type: 'checkbox',
         id: 'emphasize'
       })
       .classed('editcontrol', true);
-    
-    // newSprigotButton = root.append('button')
-    //   .text('New Sprigot!')
-    //   .classed('editcontrol', true);
 
-    root.append('label')
-      .text('Tags')
-      .classed('editcontrol', true);
-
-    tagField = root.append('input')
-      .attr({
-        value: 'tagsgohere'
-      })
-      .classed('editcontrol', true)
-      .on('keyup', eatEvent)
-      .on('keydown', eatEvent);
-
-    root.append('label')
-      .text('Formats')
-      .classed('editcontrol', true);
-
-    formatField = root.append('input')
-      .attr({
-        value: ''
-      })
-      .classed('editcontrol', true)
-      .on('keyup', eatEvent)
-      .on('keydown', eatEvent);
-  }
-
-  function addEventHandlers() {
     emphasizeCheckbox.on('change', respondToEmphasisCheckChange);
-    // newSprigotButton.on('click', respondToNewSprigotCmd);
 
-    document.addEventListener('node-focus-change', respondToFocusChange);
+    return emphasizeCheckbox;
   }
 
   function respondToFocusChange(e) {
     var focusNode = e.detail.focusNode;
+
     emphasizeCheckbox.node().checked = focusNode.emphasize;
-    tagField.node().value = focusNode.tags ? focusNode.tags.join(' ') : '';
-    formatField.node().value = focusNode.formats ? focusNode.formats.join(' ') : '';
+    d3.select('#tags-field').node().value =
+      focusNode.tags ? focusNode.tags.join(' ') : '';
+    d3.select('#formats-field').node().value =
+      focusNode.formats ? focusNode.formats.join(' ') : '';
+
   }
 }
 
