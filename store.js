@@ -2,32 +2,44 @@ var TextStuff = require('./textstuff');
 var createAPIEnvoy = require('./apienvoy');
 var idmaker = require('idmaker');
 var D3SprigBridge = require('./d3sprigbridge');
+var exportMethods = require('export-methods');
 
 function createStore() {
+  var currentApiEnvoy = createAPIEnvoy('http://192.241.250.38:4000');
+  var legacyApiEnvoy = createAPIEnvoy('http://192.241.250.38:3003');
 
-var Store = {
-  // apienvoy: createAPIEnvoy('http://127.0.0.1:3003')
-  apienvoy: createAPIEnvoy('http://192.241.250.38:3003')
-};
-// serverURL: 'http://192.168.1.104:3000'
-// serverURL: 'http://sprigot-8939.onmodulus.net',
-// serverURL: 'http://192.241.250.38', // Digital Ocean
-
-
-Store.saveSprigFromTreeNode = function saveSprigFromTreeNode(node, docId) {
-  var serializedNode = null;
-  if (node) {
-    serializedNode = D3SprigBridge.serializeTreedNode(node);
+  function getApiEnvoyForDoc(docId) {
+    return docIsLegacy(docId) ? legacyApiEnvoy : currentApiEnvoy;
   }
-  if (serializedNode) {
-    var saveId = TextStuff.makeId(4);
-    var body = {};
-    serializedNode.doc = docId;
-    body[saveId] = {
-      op: 'saveSprig',
-      params: serializedNode
-    };
-    this.apienvoy.request(body, function done(error, response) {
+
+  var legacyDocs = [
+    'The-Disappearance-of-N',
+    'Hi',
+    'resume'
+  ];
+
+  function docIsLegacy(docId) {
+    return legacyDocs.indexOf(docId) !== -1;
+  }
+
+  function saveSprigFromTreeNode(node, docId) {
+    var serializedNode = null;
+    if (node) {
+      serializedNode = D3SprigBridge.serializeTreedNode(node);
+    }
+    if (serializedNode) {
+      var saveId = TextStuff.makeId(4);
+      var body = {};
+      serializedNode.doc = docId;
+      body[saveId] = {
+        op: 'saveSprig',
+        params: serializedNode
+      };
+
+      getApiEnvoyForDoc(docId).request(body, logResults);
+    }
+
+    function logResults(error, response) {
       if (error) {
         console.log('Error while saving sprig:', error);
         return;
@@ -39,76 +51,77 @@ Store.saveSprigFromTreeNode = function saveSprigFromTreeNode(node, docId) {
       else {
         console.log('Sprig not saved.');
       }
-    });
+    }    
   }
-}
 
-Store.saveChildAndParentSprig = function saveChildAndParentSprig(child, 
-  parent) {
+  function saveChildAndParentSprig(child, parent) {
+    var body = {};
+    body.saveChildSprigOp = {
+      op: 'saveSprig',
+      params: child
+    };
+    body.saveParentSprigOp = {
+      op: 'saveSprig',
+      params: parent
+    };
 
-  var body = {};
-  body['saveChildSprigOp'] = {
-    op: 'saveSprig',
-    params: child
-  };
-  body['saveParentSprigOp'] = {
-    op: 'saveSprig',
-    params: parent
-  };
+    getApiEnvoyForDoc(child.doc).request(body, logResults);
 
-  this.apienvoy.request(body, function done(error, response) {
-    if (error) {
-      console.log('Error while saving sprigs:', error);
-      return;
+    function logResults(error, response) {
+      if (error) {
+        console.log('Error while saving sprigs:', error);
+        return;
+      }
+
+      console.log('Child sprig save status:', response.saveChildSprigOp.status);
+      console.log(
+        'Parent sprig save status:', response.saveParentSprigOp.status
+      );
     }
+  }
 
-    console.log('Child sprig save status:', 
-      response['saveChildSprigOp'].status);
-    console.log('Parent sprig save status:', 
-      response['saveParentSprigOp'].status);
-  });
-}
+  function deleteChildAndSaveParentSprig(child, parent) {
+    var requestBody = {};
 
-Store.deleteChildAndSaveParentSprig = function deleteChildAndSaveParentSprig(
-  child, parent) {
+    requestBody.deleteChildSprigOp = {
+      op: 'deleteSprig',
+      params: child
+    };
+    requestBody.saveParentSprigOp = {
+      op: 'saveSprig',
+      params: parent
+    };
+    
+    getApiEnvoyForDoc(child.doc).request(requestBody, logResults);
 
-  var requestBody = {};
-  requestBody['deleteChildSprigOp'] = {
-    op: 'deleteSprig',
-    params: child
-  };
-  requestBody['saveParentSprigOp'] = {
-    op: 'saveSprig',
-    params: parent
-  };
-  
-  this.apienvoy.request(requestBody, function done(error, response) {
-    if (error) {
-      console.log('Error while saving sprigs:', error);
-      return;
+    function logResults(error, response) {
+      if (error) {
+        console.log('Error while saving sprigs:', error);
+        return;
+      }
+
+      console.log('Sprig deletion status:', response.deleteChildSprigOp.status);
+      console.log(
+        'Parent sprig save status:', response.saveParentSprigOp.status
+      );
     }
+  }
 
-    console.log('Sprig deletion status:', 
-      response['deleteChildSprigOp'].status);
-    console.log('Parent sprig save status:', 
-      response['saveParentSprigOp'].status);
-  });
-}
+  function getDoc(docId, outerDone) {
+    var sprigRequest = {
+      op: 'getDoc',
+      params: {
+        id: docId,
+        childDepth: 0
+      }
+    };
 
-Store.getDoc = function getDoc(docId, outerDone) {
-  var sprigRequest = {
-    op: 'getDoc',
-    params: {
-      id: docId,
-      childDepth: 0
-    }
-  };
+    getApiEnvoyForDoc(docId).request({getDocReq: sprigRequest}, logResults);
 
-  this.apienvoy.request({getDocReq: sprigRequest}, 
-    function done(error, response) {
+    function logResults(error, response) {
       if (error) {
         if (outerDone) {
-          outerDone(error, null)
+          outerDone(error, null);
         }
         return;
       }
@@ -124,27 +137,27 @@ Store.getDoc = function getDoc(docId, outerDone) {
         }
       }
     }
-  );
-};
-
-Store.getSprigTree = function getSprigTree(docId, format, outerDone) {
-  var sprigRequest = {
-    op: 'getDoc',
-    params: {
-      id: docId,
-      childDepth: 40
-    }
-  };
-
-  if (format) {
-    sprigRequest.params.filterByFormat = format;
   }
 
-  this.apienvoy.request({getDocReq: sprigRequest}, 
-    function done(error, response) {
+  function getSprigTree(docId, format, outerDone) {
+    var sprigRequest = {
+      op: 'getDoc',
+      params: {
+        id: docId,
+        childDepth: 40
+      }
+    };
+
+    if (format) {
+      sprigRequest.params.filterByFormat = format;
+    }
+
+    getApiEnvoyForDoc(docId).request({getDocReq: sprigRequest}, logResults);
+
+    function logResults(error, response) {
       if (error) {
         if (outerDone) {
-          outerDone(error, null)
+          outerDone(error, null);
         }
         return;
       }
@@ -160,28 +173,28 @@ Store.getSprigTree = function getSprigTree(docId, format, outerDone) {
         }
       }
     }
-  );
-};
-
-Store.getSprigList = function getSprigList(docId, format, outerDone) {
-  var sprigRequest = {
-    op: 'getDoc',
-    params: {
-      id: docId,
-      flatten: true
-    }
-  };
-
-  if (format) {
-    sprigRequest.params.filterByFormat = format;
   }
 
+  function getSprigList(docId, format, outerDone) {
+    var sprigRequest = {
+      op: 'getDoc',
+      params: {
+        id: docId,
+        flatten: true
+      }
+    };
 
-  this.apienvoy.request({getDocReq: sprigRequest}, 
-    function done(error, response) {
+    if (format) {
+      sprigRequest.params.filterByFormat = format;
+    }
+
+
+    getApiEnvoyForDoc(docId).request({getDocReq: sprigRequest}, logResults);
+
+    function logResults(error, response) {
       if (error) {
         if (outerDone) {
-          outerDone(error, null)
+          outerDone(error, null);
         }
         return;
       }
@@ -197,28 +210,35 @@ Store.getSprigList = function getSprigList(docId, format, outerDone) {
         }
       }
     }
+  }
+
+  function createNewDoc(docParams, rootSprigParams, done) {
+    var requestBody = {};
+    var docCreateReqId = 'docCreateReq' + idmaker.randomId(4);
+    var rootSprigSaveReqId = 'rootSprigSaveReq' + idmaker.randomId(4);
+
+    requestBody[docCreateReqId] = {
+      op: 'saveDoc',
+      params: docParams
+    };
+
+    requestBody[rootSprigSaveReqId] = {
+      op: 'saveSprig',
+      params: rootSprigParams
+    };
+
+    currentApiEnvoy.request(requestBody, done);
+  }
+
+  return exportMethods(
+    saveSprigFromTreeNode,
+    saveChildAndParentSprig,
+    deleteChildAndSaveParentSprig,
+    getDoc,
+    getSprigTree,
+    getSprigList,
+    createNewDoc
   );
-};
-
-Store.createNewDoc = function createNewDoc(docParams, rootSprigParams, done) {
-  var requestBody = {}
-  var docCreateReqId = 'docCreateReq' + idmaker.randomId(4);
-  var rootSprigSaveReqId = 'rootSprigSaveReq' + idmaker.randomId(4);
-
-  requestBody[docCreateReqId] = {
-    op: 'saveDoc',
-    params: docParams
-  };
-
-  requestBody[rootSprigSaveReqId] = {
-    op: 'saveSprig',
-    params: rootSprigParams
-  };
-
-  this.apienvoy.request(requestBody, done);
-}
-
-return Store;
 }
 
 module.exports = createStore;
