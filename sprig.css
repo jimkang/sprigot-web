@@ -16,6 +16,8 @@ body {
 #svgBoard {
   border: 1px dotted rgba(224, 235, 255, 0.1);
   min-height: 400px;
+
+  flex-grow: 3;
 }
 
 .arrowboard {
@@ -99,13 +101,13 @@ body {
 }
 
 #graphPane {
+  order: 1;
+  -webkit-box-ordinal-group: 1;
   min-width: 200px;
-}
+  height: 100%;
 
-@-moz-document url-prefix(http) {
-  #graphPane {
-    height: 100%; /* Need for Firefox */
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 .divider {
@@ -154,6 +156,8 @@ body {
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em;
+
+  height: 2em;
 }
 
 section {
@@ -181,11 +185,6 @@ section {
   margin: 0;
   height: 100%;
   width: 100% /* needed for Firefox */   
-}
-
-#graphPane {
-  order: 1;
-  -webkit-box-ordinal-group: 1;
 }
 
 .divider {

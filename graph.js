@@ -41,9 +41,7 @@ Graph.init = function init(sprigotSel, camera, treeRenderer,
 
   this.board = this.pane.append('svg')
     .attr({
-      id: 'svgBoard',
-      width: '100%',
-      height: '85%'
+      id: 'svgBoard'
     });
 
   // this.setUpFilters();
