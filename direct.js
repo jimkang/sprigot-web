@@ -8,8 +8,9 @@ var Director = {
   sprigController: null,
   initialTargetSprigId: null,
   initialTargetDocId: null,
-  store: createStore()
 };
+
+var store = createStore();
 
 Director.setUpController = function setUpController(opts, done) {
   var expectedType = opts.format ? opts.format : 'sprigot';
@@ -55,7 +56,7 @@ Director.direct = function direct(locationHash) {
       this.initialTargetDocId = pathSegments[1];
     }
 
-    this.store.getDoc(this.initialTargetDocId, function gotDoc(error, doc) {
+    store.getDoc(this.initialTargetDocId, function gotDoc(error, doc) {
       if (error) {
         // TODO: Load error controller.
         console.log('Error', error);

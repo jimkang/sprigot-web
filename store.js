@@ -2,7 +2,6 @@ var TextStuff = require('./textstuff');
 var createAPIEnvoy = require('./apienvoy');
 var idmaker = require('idmaker');
 var D3SprigBridge = require('./d3sprigbridge');
-var exportMethods = require('export-methods');
 
 function createStore() {
   var currentApiEnvoy = createAPIEnvoy('http://192.241.250.38:4000');
@@ -230,15 +229,15 @@ function createStore() {
     currentApiEnvoy.request(requestBody, done);
   }
 
-  return exportMethods(
-    saveSprigFromTreeNode,
-    saveChildAndParentSprig,
-    deleteChildAndSaveParentSprig,
-    getDoc,
-    getSprigTree,
-    getSprigList,
-    createNewDoc
-  );
+  return {
+    saveSprigFromTreeNode: saveSprigFromTreeNode,
+    saveChildAndParentSprig: saveChildAndParentSprig,
+    deleteChildAndSaveParentSprig: deleteChildAndSaveParentSprig,
+    getDoc: getDoc,
+    getSprigTree: getSprigTree,
+    getSprigList: getSprigList,
+    createNewDoc: createNewDoc
+  };
 }
 
 module.exports = createStore;
