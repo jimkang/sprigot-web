@@ -75,7 +75,7 @@ body {
 }
 
 .textpane {
-  font-family: garamond, serif;
+  font-family: garamond, adobe-garamond-pro, georgia, serif;
   text-rendering: optimizeLegibility;
   background-color: #ffe;
   color: #403838;
