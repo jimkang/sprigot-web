@@ -14,7 +14,7 @@ function createStore() {
 
   var legacyDocs = [
     'The-Disappearance-of-N',
-    'Hi',
+    'About',
     'resume'
   ];
 
