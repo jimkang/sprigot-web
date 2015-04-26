@@ -1,4 +1,4 @@
-yet-another-app
+sprigot-web
 ==================
 
 This is a browser app that does some stuff.

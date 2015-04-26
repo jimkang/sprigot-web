@@ -1,5 +1,5 @@
 {
-  "name": "yet-another-app",
+  "name": "sprigot-web",
   "version": "1.0.0",
   "description": "Does some cool things.",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jimkang/yet-another-app.git"
+    "url": "git@github.com:jimkang/sprigot-web.git"
   },
   "keywords": [],
   "author": "Jim Kang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jimkang/yet-another-app/issues"
+    "url": "https://github.com/jimkang/sprigot-web/issues"
   },
-  "homepage": "https://github.com/jimkang/yet-another-app",
+  "homepage": "https://github.com/jimkang/sprigot-web",
   "devDependencies": {
     "tape": "^3.0.3"
   },

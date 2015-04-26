@@ -3,38 +3,33 @@ var loadATypeKit = require('./load_a_typekit');
 var createStore = require('./store');
 var idmaker = require('idmaker');
 var d3 = require('./lib/d3-small');
+var accessor = require('accessor');
 
 function createNewDocForm(opts) {
+  var newDocFormSel;
 
-  var newDocForm = {
-    docId: null,
-    store: null,
-    opts: opts,
-    newDocFormSel: null,
-    controllerType: 'form'
-  };
-
-  newDocForm.init = function init(initDone) {
-    this.opts = opts ? opts : {};
+  function init(initDone) {
+    opts = opts ? opts : {};
 
     var baseMixin = createSprigotBaseMixin();
-    var addedContainer = baseMixin.setUpOuterContainer('form.css', 'form', 
-      this.opts);
-    if (addedContainer) {
-      this.newDocFormSel = d3.select('.form');
-    }
-    else {
+    var addedContainer = baseMixin.setUpOuterContainer(
+      'form.css', 'form', opts
+    );
+    if (!addedContainer) {
       initDone();
       return;
     }
+    else {
+      newDocFormSel = d3.select('.form');
 
-    this.store = createStore();
+    // this.store = createStore();
 
-    loadATypeKit('//use.typekit.net/med0yzx.js', initDone);    
-  };
+      loadATypeKit('//use.typekit.net/med0yzx.js', initDone);    
+    }
+  }
 
-  newDocForm.load = function load() {
-    this.render([{
+  function load() {
+    render([{
       title: 'New Sprigot document',
       fields: [
         {
@@ -107,9 +102,9 @@ function createNewDocForm(opts) {
     setTimeout(function doneOnNextTick() { opts.loadDone(); }, 0);
   };
 
-  newDocForm.render = function render(forms) {
-    var sprigs = this.newDocFormSel.selectAll('.sprig')
-      .data(forms, function(d) { return d.id; });
+  function render(forms) {
+    var sprigs = newDocFormSel.selectAll('.sprig')
+      .data(forms, accessor());
 
     var newSprigs = sprigs.enter().append('div')
       .classed('sprig', true)
@@ -124,7 +119,7 @@ function createNewDocForm(opts) {
     var sprigsToRemove = sprigs.exit();
     sprigsToRemove.remove();
 
-    sprigBody.each(this.setUpFields);
+    sprigBody.each(setUpFields);
 
     sprigBody.append('button').classed('submit-button', true)
       .text(function getName(d) { return d.submit.name; })
@@ -135,7 +130,7 @@ function createNewDocForm(opts) {
 
   };
 
-  newDocForm.setUpFields = function setUpFields(d) {
+  function setUpFields(d) {
     var fields = d3.select(this).selectAll('.field-group').data(d.fields);
     var newFields = fields.enter().append('div').classed('field-group', true);
 
@@ -164,8 +159,12 @@ function createNewDocForm(opts) {
     return valuesForFieldIds;
   }
 
-
-  return newDocForm;
+  return {
+    init: init,
+    load: load,
+    newDocFormSel: newDocFormSel,
+    controllerType: 'form'
+  };
 }
 
 module.exports = createNewDocForm;
