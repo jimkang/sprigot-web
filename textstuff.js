@@ -2,6 +2,7 @@ var idmaker = require('idmaker');
 var d3 = require('./lib/d3-small');
 var createStrokeRouter = require('strokerouter');
 var renderAdminPanel = require('./render-admin-panel');
+var getStoreForDoc = require('./get-store');
 
 var TextStuff = {
   graph: null, 
@@ -20,16 +21,13 @@ var TextStuff = {
   findUnreadLink: null,
   showGraphLink: null,
   downLink: null,
-  // editAvailable: true
-  editAvailable: false
+  editAvailable: true
+  // editAvailable: false
 };
 
-TextStuff.init = function init(sprigotSel, graph, treeRenderer, store, 
-  sprigot, divider) {
-
+TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot, divider) {
   this.graph = graph;
   this.treeRenderer = treeRenderer;
-  this.store = store;
   this.sprigot = sprigot;
   this.divider = divider;
 
@@ -226,8 +224,10 @@ TextStuff.changeEditMode = function changeEditMode(editable, skipSave) {
     this.titleField.datum(editedNode);
 
     if (!skipSave) {
-      this.store.saveSprigFromTreeNode(this.textcontent.datum(), 
-        this.sprigot.opts.doc.id);
+      var docId = this.sprigot.opts.doc.id;
+      getStoreForDoc(docId).saveSprigFromTreeNode(
+        this.textcontent.datum(), docId
+      );
     }
   }
 }
@@ -244,7 +244,8 @@ TextStuff.respondToEmphasisCheckChange = function respondToEmphasisCheckChange()
   if (this.graph.focusNode) {
     this.graph.focusNode.emphasize = this.emphasizeCheckbox.node().checked;
     this.treeRenderer.update(this.graph.nodeRoot);
-    this.store.saveSprigFromTreeNode(this.graph.focusNode, this.sprigot.opts.doc.id);
+    var docId = this.sprigot.opts.doc.id;
+    getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
   }
 }
 

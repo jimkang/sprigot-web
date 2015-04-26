@@ -1,16 +1,14 @@
 var createNewDocForm = require('./newdoc');
 var createSpriglog = require('./spriglog');
 var createSprigot = require('./sprigot');
-var createStore = require('./store');
 var Settings = require('./sprigotclient_settings');
+var getStoreForDoc = require('./get-store');
 
 var Director = {
   sprigController: null,
   initialTargetSprigId: null,
   initialTargetDocId: null,
 };
-
-var store = createStore();
 
 Director.setUpController = function setUpController(opts, done) {
   var expectedType = opts.format ? opts.format : 'sprigot';
@@ -56,7 +54,10 @@ Director.direct = function direct(locationHash) {
       this.initialTargetDocId = pathSegments[1];
     }
 
-    store.getDoc(this.initialTargetDocId, function gotDoc(error, doc) {
+    getStoreForDoc(this.initialTargetDocId)
+      .getDoc(this.initialTargetDocId, loadDoc.bind(this));
+
+    function loadDoc(error, doc) {
       if (error) {
         // TODO: Load error controller.
         console.log('Error', error);
@@ -78,7 +79,6 @@ Director.direct = function direct(locationHash) {
         this.setUpController(opts, this.callLoad.bind(this));
       }
     }
-    .bind(this));
   }
 };
 

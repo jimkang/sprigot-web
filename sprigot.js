@@ -4,13 +4,13 @@ var loadATypeKit = require('./load_a_typekit');
 var Historian = require('./historian');
 var createDivider = require('./divider');
 var TextStuff = require('./textstuff');
-var createStore = require('./store');
 var createGraph = require('./graph');
 var TreeRenderer = require('./treerenderer');
 var idmaker = require('idmaker');
 var D3SprigBridge = require('./d3sprigbridge');
 var createCamera = require('./camera');
 var d3 = require('./lib/d3-small');
+var getStoreForDoc = require('./get-store');
 
 function createSprigot(opts) {
 // Expected in opts: doc, loadDone.
@@ -18,7 +18,6 @@ function createSprigot(opts) {
 
 var Sprigot = {
   graph: null,
-  store: null,
   divider: null,
   camera: null,
   opts: opts,
@@ -46,12 +45,10 @@ Sprigot.init = function init(initDone) {
   var sprigotSel = d3.select('.sprigot');  
   this.graph.init(sprigotSel, this.camera, TreeRenderer, TextStuff, Historian,
     this);
-  this.store = createStore();
   this.divider = createDivider();
 
   this.divider.init(sprigotSel, this.graph, TextStuff, this.camera, this);
-  TextStuff.init(sprigotSel, this.graph, TreeRenderer, this.store, this, 
-      this.divider);
+  TextStuff.init(sprigotSel, this.graph, TreeRenderer, this, this.divider);
 
   this.divider.syncExpanderArrow();
   this.initDocEventResponders();
@@ -62,39 +59,40 @@ Sprigot.init = function init(initDone) {
 };
 
 Sprigot.load = function load() {
-  Historian.init(this.graph.treeNav, this.opts.doc.id);
+  var docId = this.opts.doc.id;
+  Historian.init(this.graph.treeNav, docId);
 
-  this.store.getSprigTree(this.opts.doc.id, this.opts.format, 
-    function gotTree(error, tree) {
-      if (error) {
-        this.opts.loadDone(error, null);
-      }
+  getStoreForDoc(docId)
+    .getSprigTree(docId, this.opts.format, loadTree.bind(this));
 
-      if (tree) {
-        tree = D3SprigBridge.sanitizeTreeForD3(tree);
-
-        d3.select('title').text('Sprigot - ' + tree.title);          
-
-        var targetId = this.opts.initialTargetSprigId;
-        var matcher = function matchAny() { return true; };
-        if (targetId) {
-          matcher = function isTarget(sprig) { return (targetId === sprig.id); };
-        }
-
-        this.graph.loadNodeTreeToGraph(tree, matcher, function onGraphLoaded() {
-          if (targetId === 'findunread') {
-            this.respondToFindUnreadCmd();
-          }
-          this.opts.loadDone();
-        }
-        .bind(this));
-      }
-      else {
-        this.opts.loadDone('Sprig tree not found.');
-      }
+  function loadTree(error, tree) {
+    if (error) {
+      this.opts.loadDone(error, null);
     }
-    .bind(this)
-  );
+
+    if (tree) {
+      tree = D3SprigBridge.sanitizeTreeForD3(tree);
+
+      d3.select('title').text('Sprigot - ' + tree.title);          
+
+      var targetId = this.opts.initialTargetSprigId;
+      var matcher = function matchAny() { return true; };
+      if (targetId) {
+        matcher = function isTarget(sprig) { return (targetId === sprig.id); };
+      }
+
+      this.graph.loadNodeTreeToGraph(tree, matcher, function onGraphLoaded() {
+        if (targetId === 'findunread') {
+          this.respondToFindUnreadCmd();
+        }
+        this.opts.loadDone();
+      }
+      .bind(this));
+    }
+    else {
+      this.opts.loadDone('Sprig tree not found.');
+    }
+  }
 };
 
 Sprigot.initDocEventResponders = function initDocEventResponders() {
@@ -138,10 +136,11 @@ Sprigot.respondToAddChildSprigCmd = function respondToAddChildSprigCmd() {
     TextStuff.changeEditMode(false);
   }
 
+  var docId = this.opts.doc.id;
+
   var currentJSONDate = (new Date()).toJSON();
   var newSprig = {
     id: TextStuff.makeId(8),
-    doc: this.opts.doc.id,
     title: 'New Sprig',
     body: '',
     created: currentJSONDate,
@@ -161,7 +160,7 @@ Sprigot.respondToAddChildSprigCmd = function respondToAddChildSprigCmd() {
 
   TextStuff.changeEditMode(true);
 
-  this.store.saveChildAndParentSprig(newSprig, 
+  getStoreForDoc(docId).saveChildAndParentSprig(newSprig, 
     D3SprigBridge.serializeTreedNode(this.graph.focusNode));
 
   TreeRenderer.update(this.graph.nodeRoot, 
@@ -184,14 +183,16 @@ Sprigot.respondToDeleteSprigCmd = function respondToDeleteSprigCmd() {
   var parentNode = this.graph.focusNode.parent;
   var childIndex = parentNode.children.indexOf(this.graph.focusNode);
   parentNode.children.splice(childIndex, 1);
+  var docId = this.opts.doc.id;
 
   var sprigToDelete = {
     id: this.graph.focusNode.id,
-    doc: this.opts.doc.id
+    doc: docId
   };
 
-  this.store.deleteChildAndSaveParentSprig(sprigToDelete, 
-    D3SprigBridge.serializeTreedNode(parentNode));
+  getStoreForDoc(docId).deleteChildAndSaveParentSprig(
+    sprigToDelete, D3SprigBridge.serializeTreedNode(parentNode)
+  );
 
   var treeNav = this.graph.treeNav;
 
@@ -223,7 +224,7 @@ Sprigot.respondToNewSprigotCmd = function respondToNewSprigotCmd() {
     children: []
   };
 
-  this.store.createNewDoc(newDoc, rootSprig);
+  getStoreForDoc(newDoc.id).createNewDoc(newDoc, rootSprig);
 };
 
 Sprigot.respondToFindUnreadCmd = function respondToFindUnreadCmd() {
