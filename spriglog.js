@@ -1,13 +1,12 @@
 var createSprigotBaseMixin = require('./sprigotbasemixin');
 var loadATypeKit = require('./load_a_typekit');
 var Historian = require('./historian');
-var createStore = require('./store');
+var getStoreForDoc = require('./get-store');
 
 function createSpriglog(opts) {
 // Expected in opts: doc, loadDone.
 
 var Spriglog = {
-  store: null,
   opts: opts,
   spriglogSel: null,
   controllerType: 'bloge',
@@ -32,14 +31,15 @@ Spriglog.init = function init(initDone) {
     return;
   }
 
-  this.store = createStore();
   loadATypeKit('//use.typekit.net/med0yzx.js', initDone);
 };
 
 Spriglog.load = function load() {
-  Historian.init(null, this.opts.doc.id);
+  var docId = this.opts.doc.id;
 
-  this.store.getSprigList(this.opts.doc.id, this.opts.format,
+  Historian.init(null, docId);
+
+  getStoreForDoc(docId).getSprigList(docId, this.opts.format,
     function doneGettingList(error, sprigList) {
       if (error) {
         this.opts.loadDone(error, null);
