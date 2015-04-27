@@ -1,9 +1,10 @@
 var createSprigotBaseMixin = require('./sprigotbasemixin');
 var loadATypeKit = require('./load_a_typekit');
-var createStore = require('./store');
+var legacyStore = require('./legacy-store');
 var idmaker = require('idmaker');
 var d3 = require('./lib/d3-small');
 var accessor = require('accessor');
+var Director = require('./direct');
 
 function createNewDocForm(opts) {
   var newDocFormSel;
@@ -59,7 +60,6 @@ function createNewDocForm(opts) {
       ],
       submit: {
         action: function submitNewDocument(formValues) {
-          var store = createStore();
           var newDoc = {
             id: formValues.name,
             rootSprig: idmaker.randomId(8),
@@ -84,7 +84,7 @@ function createNewDocForm(opts) {
             modified: currentJSONDate 
           };
 
-          store.createNewDoc(newDoc, rootSprig, function done(error, response) {
+          legacyStore.createNewDoc(newDoc, rootSprig, function done(error, response) {
             if (error) {
               console.log('Error while saving doc:', error);
             }

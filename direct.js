@@ -50,6 +50,7 @@ function direct(locationHash) {
       legacyStore.getDoc(rootId, setUpControllerWithDoc);
     }
     else {
+      // TODO: New sprigot-controller to replace sprigot.js.
       setUpController({
         format: 'sprigot',
         rootId: rootId,
@@ -137,5 +138,6 @@ function dictFromQueryString(queryString) {
 }
 
 module.exports = {
-  init: init
+  init: init,
+  direct: direct
 };

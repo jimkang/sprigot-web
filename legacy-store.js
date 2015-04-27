@@ -34,7 +34,7 @@ function saveChildAndParentSprig(child, parent) {
     params: parent
   };
 
-  getApiEnvoyForDoc(child.doc).request(body, logResults);
+  apiEnvoy.request(body, logResults);
 
   function logResults(error, response) {
     if (error) {
@@ -61,7 +61,7 @@ function deleteChildAndSaveParentSprig(child, parent) {
     params: parent
   };
   
-  getApiEnvoyForDoc(child.doc).request(requestBody, logResults);
+  apiEnvoy.request(requestBody, logResults);
 
   function logResults(error, response) {
     if (error) {
@@ -193,7 +193,7 @@ function createNewDoc(docParams, rootSprigParams, done) {
     params: rootSprigParams
   };
 
-  currentApiEnvoy.request(requestBody, done);
+  apiEnvoy.request(requestBody, done);
 }
 
 module.exports = {

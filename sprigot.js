@@ -10,7 +10,7 @@ var idmaker = require('idmaker');
 var D3SprigBridge = require('./d3sprigbridge');
 var createCamera = require('./camera');
 var d3 = require('./lib/d3-small');
-var getStoreForDoc = require('./get-store');
+var legacyStore = require('./legacy-store');
 
 function createSprigot(opts) {
 // Expected in opts: doc, loadDone.
@@ -62,8 +62,7 @@ Sprigot.load = function load() {
   var rootId = getRootIdFromOpts(this.opts);
   Historian.init(this.graph.treeNav, rootId);
 
-  getStoreForDoc(rootId)
-    .getSprigTree(rootId, this.opts.format, loadTree.bind(this));
+  legacyStore.getSprigTree(rootId, this.opts.format, loadTree.bind(this));
 
   function loadTree(error, tree) {
     if (error) {
@@ -160,7 +159,7 @@ Sprigot.respondToAddChildSprigCmd = function respondToAddChildSprigCmd() {
 
   TextStuff.changeEditMode(true);
 
-  getStoreForDoc(rootId).saveChildAndParentSprig(newSprig, 
+  legacyStore.saveChildAndParentSprig(newSprig, 
     D3SprigBridge.serializeTreedNode(this.graph.focusNode));
 
   TreeRenderer.update(this.graph.nodeRoot, 
@@ -190,7 +189,7 @@ Sprigot.respondToDeleteSprigCmd = function respondToDeleteSprigCmd() {
     doc: rootId
   };
 
-  getStoreForDoc(rootId).deleteChildAndSaveParentSprig(
+  legacyStore.deleteChildAndSaveParentSprig(
     sprigToDelete, D3SprigBridge.serializeTreedNode(parentNode)
   );
 
@@ -224,7 +223,15 @@ Sprigot.respondToNewSprigotCmd = function respondToNewSprigotCmd() {
     children: []
   };
 
-  getStoreForDoc(newDoc.id).createNewDoc(newDoc, rootSprig);
+  // TODO: When new API is in place, create a separate body and refer to it 
+  // from the sprig:
+  // var body = {
+  //   id: idmaker.randomId('b-' + 8),
+  //   body: 'Hello. Type some stuff here.',
+  // };
+
+
+  legacyStore.createNewDoc(newDoc, rootSprig);
 };
 
 Sprigot.respondToFindUnreadCmd = function respondToFindUnreadCmd() {
