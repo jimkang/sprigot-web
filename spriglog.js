@@ -11,8 +11,8 @@ var Spriglog = {
   spriglogSel: null,
   controllerType: 'bloge',
   sprigList: [],
-  sprigShowRange: [0, 5], // Excludes end
-  numberOfSprigsToRevealPerScrollEnd: 5
+  sprigShowRange: [0, 200], // Excludes end
+  numberOfSprigsToRevealPerScrollEnd: 200
 };
 
 Spriglog.init = function init(initDone) {
