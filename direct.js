@@ -3,6 +3,7 @@ var createSpriglog = require('./spriglog');
 var createSprigot = require('./sprigot');
 var Settings = require('./sprigotclient_settings');
 var getStoreForDoc = require('./get-store');
+var isLegacy = require('./is-legacy');
 
 var Director = {
   sprigController: null,
