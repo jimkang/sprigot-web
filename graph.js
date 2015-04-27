@@ -4,6 +4,7 @@ var TreeRenderer = require('./treerenderer');
 var D3SprigBridge = require('./d3sprigbridge');
 var d3 = require('./lib/d3-small');
 var _ = require('lodash');
+var getStoreForDoc = require('./get-store');
 
 function createGraph() {
 
@@ -253,7 +254,7 @@ Graph.swapNodeWithSibling = function swapNodeWithSibling(node, direction) {
       var swapee = node.parent.children[newIndex];
       node.parent.children[nodeIndex] = swapee;
       node.parent.children[newIndex] = node;
-      this.sprigot.store.saveSprigFromTreeNode(node.parent, node.parent.doc);
+      getStoreForDoc(docId).saveSprigFromTreeNode(node.parent, node.parent.doc);
     }
   }
 };
@@ -276,8 +277,9 @@ Graph.swapNodeTreePositions = function swapNodeTreePositions(node1, node2) {
 
   this.treeRenderer.update(this.nodeRoot);
 
-  this.sprigot.store.saveSprigFromTreeNode(node1.parent, node1.parent.doc);
-  this.sprigot.store.saveSprigFromTreeNode(node2.parent, node2.parent.doc);
+  var docId = node1.parent.doc;
+  getStoreForDoc(docId).saveSprigFromTreeNode(node1.parent, node1.parent.doc);
+  getStoreForDoc(docId).saveSprigFromTreeNode(node2.parent, node2.parent.doc);
 };
 
 Graph.moveNodeToNewParent = function moveNodeToNewParent(child, parent) {
@@ -310,8 +312,9 @@ Graph.moveNodeToNewParent = function moveNodeToNewParent(child, parent) {
 
   this.treeRenderer.update(this.nodeRoot);
 
-  this.sprigot.store.saveSprigFromTreeNode(parent, parent.doc);
-  this.sprigot.store.saveSprigFromTreeNode(oldParent, oldParent.doc);  
+  var docId = parent.doc;
+  getStoreForDoc(docId).saveSprigFromTreeNode(parent, parent.doc);
+  getStoreForDoc(docId).saveSprigFromTreeNode(oldParent, oldParent.doc);  
 };
 
 return Graph;
