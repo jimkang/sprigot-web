@@ -20,6 +20,15 @@ function saveSprigFromTreeNode(node, docId) {
 
     apiEnvoy.request(body, logResults);    
   }
+
+  function logResults(error, response) {
+    if (error) {
+      console.log('Error during saveSprigFromTreeNode:', error);
+      return;
+    }
+
+    console.log(response);
+  }
 }
 
 function saveChildAndParentSprig(child, parent) {
