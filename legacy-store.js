@@ -1,4 +1,3 @@
-var TextStuff = require('./textstuff');
 var createAPIEnvoy = require('./apienvoy');
 var idmaker = require('idmaker');
 var D3SprigBridge = require('./d3sprigbridge');
@@ -11,7 +10,7 @@ function saveSprigFromTreeNode(node, docId) {
     serializedNode = D3SprigBridge.serializeTreedNode(node);
   }
   if (serializedNode) {
-    var saveId = TextStuff.makeId(4);
+    var saveId = idmaker.randomId(4);
     var body = {};
     serializedNode.doc = docId;
     body[saveId] = {
