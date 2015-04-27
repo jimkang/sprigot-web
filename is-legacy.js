@@ -1,7 +1,7 @@
 var legacyDocs = [
   'The-Disappearance-of-N',
   'About',
-  'resume'
+  'resume''
 ];
 
 function docIsLegacy(docId) {

@@ -5,113 +5,111 @@ var Settings = require('./sprigotclient_settings');
 var getStoreForDoc = require('./get-store');
 var isLegacy = require('./is-legacy');
 
-var Director = {
-  sprigController: null,
-  initialTargetSprigId: null,
-  initialTargetDocId: null,
-};
+var sprigController;
+var initialTargetSprigId;
+var initialTargetDocId;
 
-Director.setUpController = function setUpController(opts, done) {
+function setUpController(opts, done) {
   var expectedType = opts.format ? opts.format : 'sprigot';
 
-  if (!this.sprigController || 
-    this.sprigController.controllerType !== expectedType) {
+  if (!sprigController || 
+    sprigController.controllerType !== expectedType) {
 
     if (opts.format === 'bloge') {
-      this.sprigController = createSpriglog(opts);
+      sprigController = createSpriglog(opts);
     }
     else if (opts.format === 'newdoc') {
-      this.sprigController = createNewDocForm(opts);
+      sprigController = createNewDocForm(opts);
     }
     else {
-      this.sprigController = createSprigot(opts);
+      sprigController = createSprigot(opts);
     }
 
-    this.sprigController.init(done);
+    sprigController.init(done);
   }
   else {
-    this.sprigController.opts = opts;
+    sprigController.opts = opts;
     setTimeout(done, 0);
   }
-};
+}
 
-Director.direct = function direct(locationHash) {
-  var opts = this.dictFromQueryString(this.queryStringFromHash(locationHash));
+function direct(locationHash) {
+  var opts = dictFromQueryString(queryStringFromHash(locationHash));
   var pathSegments = locationHash.split('/');
 
   if (pathSegments.length > 0 && pathSegments[1] === 'new') {
     opts.format = 'newdoc';
-    opts.loadDone = this.loadDone.bind(this);
-    this.setUpController(opts, this.callLoad.bind(this));
+    opts.loadDone = loadDone.bind(this);
+    setUpController(opts, callLoad.bind(this));
   }
   else {    
     // Paths other than newdoc require that the doc (without its tree) 
     // be loaded before deciding which controller to use.
     if (pathSegments.length < 2 || !pathSegments[1]) {
       // No docId specified.
-      this.initialTargetDocId = Settings.defaultDoc;
+      initialTargetDocId = Settings.defaultDoc;
     }
     else {
-      this.initialTargetDocId = pathSegments[1];
+      initialTargetDocId = pathSegments[1];
     }
 
-    getStoreForDoc(this.initialTargetDocId)
-      .getDoc(this.initialTargetDocId, loadDoc.bind(this));
-
-    function loadDoc(error, doc) {
-      if (error) {
-        // TODO: Load error controller.
-        console.log('Error', error);
-      }
-      else if (!doc) {
-        console.log('Could not find doc', this.initialTargetDocId);
-      }
-      else {
-        if (!opts.format) {
-          opts.format = doc.format;
-        }
-        if (!opts.doc) {
-          opts.doc = doc;
-        }
-        if (pathSegments.length > 1) {
-          opts.initialTargetSprigId = pathSegments[2];
-        }
-        opts.loadDone = this.loadDone.bind(this);
-        this.setUpController(opts, this.callLoad.bind(this));
-      }
-    }
+    getStoreForDoc(initialTargetDocId)
+      .getDoc(initialTargetDocId, loadDoc.bind(this));
   }
-};
 
-Director.loadDone = function loadDone(error) {
+  function loadDoc(error, doc) {
+    if (error) {
+      // TODO: Load error controller.
+      console.log('Error', error);
+    }
+    else if (!doc) {
+      console.log('Could not find doc', initialTargetDocId);
+    }
+    else {
+      if (!opts.format) {
+        opts.format = doc.format;
+      }
+      if (!opts.doc) {
+        opts.doc = doc;
+      }
+      if (pathSegments.length > 1) {
+        opts.initialTargetSprigId = pathSegments[2];
+      }
+      opts.loadDone = loadDone.bind(this);
+      setUpController(opts, callLoad.bind(this));
+    }
+  }  
+}
+
+function loadDone(error) {
   if (error) {
     console.log('Error while loading:', error);
   }
-};
+}
 
-Director.callLoad = function callLoad() {
-  this.sprigController.load();
-};
+function callLoad() {
+  sprigController.load();
+}
 
-Director.respondToHashChange = function respondToHashChange() {
-  this.direct(location.hash);
-};
+function respondToHashChange() {
+  direct(location.hash);
+}
 
-Director.init = function init() {
-  this.direct(location.hash);
-  window.onhashchange = this.respondToHashChange.bind(this);
-};
+function init() {
+  direct(location.hash);
+  window.onhashchange = respondToHashChange.bind(this);
+}
 
-Director.queryStringFromHash = function queryStringFromHash(locationHash) {
+function queryStringFromHash(locationHash) {
   var queryString = null;
   var linkParts = locationHash.split('?');
   if (linkParts.length > 1) {
     queryString = linkParts[1];
   }
   return queryString;
-};
+}
 
-Director.dictFromQueryString = function dictFromQueryString(queryString) {
+function dictFromQueryString(queryString) {
   var queryHash = {};
   if (queryString && typeof queryString === 'string') {
     var queryParts = queryString.split('&');
@@ -124,6 +122,8 @@ Director.dictFromQueryString = function dictFromQueryString(queryString) {
     }
   }
   return queryHash;
-};
+}
 
-module.exports = Director;
+module.exports = {
+  init: init
+};
