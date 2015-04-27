@@ -50,6 +50,12 @@ function direct(locationHash) {
       legacyStore.getDoc(rootId, setUpControllerWithDoc);
     }
     else {
+      setUpController({
+        format: 'sprigot',
+        rootId: rootId,
+        initialTargetSprigId: pathSegments[2],
+        loadDone: loadDone
+      });
     }
   }
 

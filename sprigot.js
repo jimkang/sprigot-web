@@ -59,11 +59,11 @@ Sprigot.init = function init(initDone) {
 };
 
 Sprigot.load = function load() {
-  var docId = this.opts.doc.id;
-  Historian.init(this.graph.treeNav, docId);
+  var rootId = getRootIdFromOpts(this.opts);
+  Historian.init(this.graph.treeNav, rootId);
 
-  getStoreForDoc(docId)
-    .getSprigTree(docId, this.opts.format, loadTree.bind(this));
+  getStoreForDoc(rootId)
+    .getSprigTree(rootId, this.opts.format, loadTree.bind(this));
 
   function loadTree(error, tree) {
     if (error) {
@@ -136,7 +136,7 @@ Sprigot.respondToAddChildSprigCmd = function respondToAddChildSprigCmd() {
     TextStuff.changeEditMode(false);
   }
 
-  var docId = this.opts.doc.id;
+  var rootId = getRootIdFromOpts(this.opts);
 
   var currentJSONDate = (new Date()).toJSON();
   var newSprig = {
@@ -160,7 +160,7 @@ Sprigot.respondToAddChildSprigCmd = function respondToAddChildSprigCmd() {
 
   TextStuff.changeEditMode(true);
 
-  getStoreForDoc(docId).saveChildAndParentSprig(newSprig, 
+  getStoreForDoc(rootId).saveChildAndParentSprig(newSprig, 
     D3SprigBridge.serializeTreedNode(this.graph.focusNode));
 
   TreeRenderer.update(this.graph.nodeRoot, 
@@ -183,14 +183,14 @@ Sprigot.respondToDeleteSprigCmd = function respondToDeleteSprigCmd() {
   var parentNode = this.graph.focusNode.parent;
   var childIndex = parentNode.children.indexOf(this.graph.focusNode);
   parentNode.children.splice(childIndex, 1);
-  var docId = this.opts.doc.id;
+  var rootId = getRootIdFromOpts(this.opts);
 
   var sprigToDelete = {
     id: this.graph.focusNode.id,
-    doc: docId
+    doc: rootId
   };
 
-  getStoreForDoc(docId).deleteChildAndSaveParentSprig(
+  getStoreForDoc(rootId).deleteChildAndSaveParentSprig(
     sprigToDelete, D3SprigBridge.serializeTreedNode(parentNode)
   );
 
@@ -285,6 +285,10 @@ Sprigot.tagElementsWithCSSHackClasses = function tagElementsWithCSSHackClasses()
 };
 
 return Sprigot;
+}
+
+function getRootIdFromOpts(opts) {
+  return opts.doc.id ? opts.doc.id : opts.rootId;
 }
 
 module.exports = createSprigot;
