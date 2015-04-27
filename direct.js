@@ -2,12 +2,12 @@ var createNewDocForm = require('./newdoc');
 var createSpriglog = require('./spriglog');
 var createSprigot = require('./sprigot');
 var Settings = require('./sprigotclient_settings');
-var getStoreForDoc = require('./get-store');
+var legacyStore = require('./legacy-store');
 var isLegacy = require('./is-legacy');
 
 var sprigController;
 var initialTargetSprigId;
-var initialTargetDocId;
+var rootId;
 
 function setUpController(opts, done) {
   var expectedType = opts.format ? opts.format : 'sprigot';
@@ -39,31 +39,27 @@ function direct(locationHash) {
 
   if (pathSegments.length > 0 && pathSegments[1] === 'new') {
     opts.format = 'newdoc';
-    opts.loadDone = loadDone.bind(this);
-    setUpController(opts, callLoad.bind(this));
+    opts.loadDone = loadDone;
+    setUpController(opts, callLoad);
   }
   else {    
     // Paths other than newdoc require that the doc (without its tree) 
     // be loaded before deciding which controller to use.
-    if (pathSegments.length < 2 || !pathSegments[1]) {
-      // No docId specified.
-      initialTargetDocId = Settings.defaultDoc;
+    rootId = getRootIdFromPathSegments(pathSegments);
+    if (isLegacy(rootId)) {
+      legacyStore.getDoc(rootId, setUpControllerWithDoc);
     }
     else {
-      initialTargetDocId = pathSegments[1];
     }
-
-    getStoreForDoc(initialTargetDocId)
-      .getDoc(initialTargetDocId, loadDoc.bind(this));
   }
 
-  function loadDoc(error, doc) {
+  function setUpControllerWithDoc(error, doc) {
     if (error) {
       // TODO: Load error controller.
       console.log('Error', error);
     }
     else if (!doc) {
-      console.log('Could not find doc', initialTargetDocId);
+      console.log('Could not find doc', rootId);
     }
     else {
       if (!opts.format) {
@@ -75,10 +71,20 @@ function direct(locationHash) {
       if (pathSegments.length > 1) {
         opts.initialTargetSprigId = pathSegments[2];
       }
-      opts.loadDone = loadDone.bind(this);
-      setUpController(opts, callLoad.bind(this));
+      opts.loadDone = loadDone;
+      setUpController(opts, callLoad);
     }
-  }  
+  }
+}
+
+function getRootIdFromPathSegments(pathSegments) {
+  if (pathSegments.length < 2 || !pathSegments[1]) {
+    // No id specified.
+    return Settings.defaultDoc;
+  }
+  else {
+    return pathSegments[1];
+  }
 }
 
 function loadDone(error) {
@@ -97,7 +103,7 @@ function respondToHashChange() {
 
 function init() {
   direct(location.hash);
-  window.onhashchange = respondToHashChange.bind(this);
+  window.onhashchange = respondToHashChange;
 }
 
 function queryStringFromHash(locationHash) {
