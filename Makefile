@@ -40,10 +40,14 @@ pch: smash # smash-debug
 build: smash
 	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m -o sprigot-web.js
 
+build-unminified: smash
+	$(BIN)/browserify index.js > sprigot-web.js
+
 switch-index-to-production:
 	sed 's/$(DEVTAGS)/$(PRODUCTIONTAGS)/' index.html | tee index.html
 
 deploy: build switch-index-to-production
 	cp sprigot-web.js $(PRODDIR) && \
 	cp *.css $(PRODDIR) && \
-	cp index.html $(PRODDIR)
+	cp index.html $(PRODDIR) && \
+	git checkout index.html
