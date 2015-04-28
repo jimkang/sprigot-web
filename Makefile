@@ -1,5 +1,4 @@
 BIN = node_modules/.bin
-
 DEVTAGS = <script\ src="pch.js"><\/script><script\ src="index.js"><\/script>
 PRODUCTIONTAGS = <script\ src="sprigot-web.js"><\/script>
 PRODDIR = ../sprigotclient
@@ -38,7 +37,7 @@ pch: smash # smash-debug
 		-o pch.js
 
 build: smash
-	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m -o sprigot-web.js
+	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m --keep-fnames -o sprigot-web.js
 
 build-unminified: smash
 	$(BIN)/browserify index.js > sprigot-web.js
