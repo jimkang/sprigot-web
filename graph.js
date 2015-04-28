@@ -254,6 +254,7 @@ Graph.swapNodeWithSibling = function swapNodeWithSibling(node, direction) {
       var swapee = node.parent.children[newIndex];
       node.parent.children[nodeIndex] = swapee;
       node.parent.children[newIndex] = node;
+      var docId = node.parent.doc;
       getStoreForDoc(docId).saveSprigFromTreeNode(node.parent, node.parent.doc);
     }
   }
