@@ -21,8 +21,8 @@ var TextStuff = {
   findUnreadLink: null,
   showGraphLink: null,
   downLink: null,
-  editAvailable: true
-  // editAvailable: false
+  // editAvailable: true
+  editAvailable: false
 };
 
 TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot, divider) {

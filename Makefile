@@ -36,10 +36,16 @@ pch: smash # smash-debug
 		-r lodash \
 		-o pch.js
 
-build: smash
+css:
+	$(BIN)/myth sprig-src.css sprig.css
+
+css-watch:
+	$(BIN)/myth -w sprig-src.css sprig.css
+
+build: smash css
 	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m --keep-fnames -o sprigot-web.js
 
-build-unminified: smash
+build-unminified: smash css
 	$(BIN)/browserify index.js > sprigot-web.js
 
 switch-index-to-production:

@@ -3,10 +3,12 @@ html {
 }
 
 body {
-  font-family: brandon-grotesque, 'Helvetica Neue', Helvetica, sans-serif;
+	font-family: brandon-grotesque, 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 24px;
   color: #eee;
+
   background-color: #252528;
+  
   margin: 0;
   height: 100%;
 }
@@ -14,8 +16,7 @@ body {
 #svgBoard {
   border: 1px dotted rgba(224, 235, 255, 0.1);
   min-height: 400px;
-  -webkit-flex-grow: 3;
-  -ms-flex-positive: 3;
+
   flex-grow: 3;
 }
 
@@ -26,8 +27,8 @@ body {
 .node circle {
   cursor: pointer;
   stroke-width: 1.5px;
-  fill-opacity: 0.8;
-  stroke-opacity: 0.5;
+	fill-opacity: 0.8;
+	stroke-opacity: 0.5;
   fill: blue;
 }
 
@@ -43,8 +44,6 @@ body {
 }
 
 .pane {
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   width: 44%;
   min-width: 200px;
@@ -71,11 +70,7 @@ body {
   background-color: #ffe;
   color: #403838;
   margin-left: 8px;
-  -webkit-flex-grow: 6;
-  -ms-flex-positive: 6;
   flex-grow: 6;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
@@ -97,16 +92,11 @@ body {
 }
 
 #graphPane {
-  -webkit-order: 1;
-  -ms-flex-order: 1;
   order: 1;
   min-width: 200px;
   height: 100%;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -117,7 +107,7 @@ body {
 }
 
 .textcontent {
-  font-weight: normal;
+  font-weight: normal;  
   padding-left: 1.2em;
   padding-right: 1em;
   padding-top: 1em;
@@ -144,11 +134,9 @@ body {
 }
 
 .findunread-link {
-  float: right;
+  float: right;  
   padding-left: 8px;
   padding-right: 8px;
-  -webkit-flex-basis: 1em;
-  -ms-flex-preferred-size: 1em;
   flex-basis: 1em;
 }
 
@@ -158,47 +146,32 @@ body {
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em;
+
   height: 2em;
 }
 
 section {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  /* NEW: Opera 12.1, Firefox 22+ */
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
+  display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
+
   flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
   justify-content: center;
+
   margin: 0;
   height: 100%;
-  width: 100%;
+  width: 100% /* needed for Firefox */   
 }
 
 .divider {
-  -webkit-order: 2;
-  -ms-flex-order: 2;
   order: 2;
 }
 
 #nongraphPane {
-  -webkit-order: 3;
-  -ms-flex-order: 3;
   order: 3;
   height: 100%;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -212,13 +185,13 @@ section {
 }
 
 /* Firefox */
-
-@-moz-document url-prefix(http)  {
+@-moz-document url-prefix(http) {
   #nongraphPane {
     /* When the content is taller than the window, this will let it scroll. */
     height: 100%;
   }
 }
+
 
 /* iPad */
 
@@ -238,98 +211,68 @@ section {
 
 @media only screen and (max-device-height: 568px) {
   /* Works on iOS 7 */
-
   section {
     /*height: 568px;*/
     width: 320px;
   }
 
   #graphPane {
-    -webkit-order: 3;
-    -ms-flex-order: 3;
     order: 3;
-    -webkit-flex: 1 6 100px;
-    -ms-flex: 1 6 100px;
     flex: 1 6 100px;
     width: 95%;
   }
 
   .divider {
     display: none;
-    -webkit-order: 2;
-    -ms-flex-order: 2;
     order: 2;
-    -webkit-flex: 0 0 0px;
-    -ms-flex: 0 0 0px;
     flex: 0 0 0px;
   }
 
   #nongraphPane {
     width: 100%;
-    -webkit-order: 1;
-    -ms-flex-order: 1;
     order: 1;
     margin-top: 8px;
-    -webkit-flex: 1 1 80%;
-    -ms-flex: 1 1 80%;
     flex: 1 1 80%;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+
     display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
     flex-direction: column;
   }
 
   /* Works on iOS 6 */
-
   section.is-not-ios-seven {
     height: 568px;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
+
     flex-direction: column;
+
     /* Without this, Safari won't respect -webkit-flex-direction. */
     -webkit-box-orient: vertical;
   }
 
   #graphPane.is-not-ios-seven {
-    -webkit-order: 3;
-    -ms-flex-order: 3;
     order: 3;
-    -webkit-flex: 1 6 100px;
-    -ms-flex: 1 6 100px;
     flex: 1 6 100px;
     width: 95%;
   }
 
   .divider.is-not-ios-seven {
     display: none;
-    -webkit-order: 2;
-    -ms-flex-order: 2;
     order: 2;
-    -webkit-flex: 0 0 0px;
-    -ms-flex: 0 0 0px;
     flex: 0 0 0px;
   }
 
   #nongraphPane.is-not-ios-seven {
     width: 100%;
-    -webkit-order: 1;
-    -ms-flex-order: 1;
     order: 1;
     margin-top: 8px;
-    -webkit-flex: 1 1 80%;
-    -ms-flex: 1 1 80%;
     flex: 1 1 80%;
   }
+  
 
   #svgBoard {
     height: 250px;
   }
 
   .expandedPane {
-    -webkit-flex: 1 1 auto;
-    -ms-flex: 1 1 auto;
     flex: 1 1 auto;
   }
 
@@ -340,8 +283,6 @@ section {
   .collapsedPane {
     max-height: 0;
     height: 0;
-    -webkit-flex: 1 1 0;
-    -ms-flex: 1 1 0;
     flex: 1 1 0;
   }
 }
