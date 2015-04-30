@@ -43,7 +43,7 @@ function loadATypeKit(typekitURL, done) {
       console.log('Typekit already loaded.')
     }
   },
-  1000);
+  10 * 1000);
 }
 
 module.exports = loadATypeKit;
