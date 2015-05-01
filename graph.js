@@ -5,6 +5,8 @@ var D3SprigBridge = require('./d3sprigbridge');
 var d3 = require('./lib/d3-small');
 var _ = require('lodash');
 var getStoreForDoc = require('./get-store');
+var createPaneShiftControl = require('./pane-shift-control');
+var createPaneShifter = require('./pane-shifter');
 
 function createGraph() {
 
@@ -73,6 +75,19 @@ Graph.init = function init(sprigotSel, camera, treeRenderer,
   }
 
   this.collisionFinder = createCollisionFinder(this.board.node());
+
+  this.paneShifter = createPaneShifter({
+    state: 'half-expanded',
+    pane: this.pane
+  });
+
+  this.paneShiftControl = createPaneShiftControl({
+    parent: this.pane,
+    onClick: this.paneShifter.toggle,
+    expandDirection: 1
+  });
+
+  this.paneShiftControl.render();
 
   return this;
 };

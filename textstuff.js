@@ -3,6 +3,8 @@ var d3 = require('./lib/d3-small');
 var createStrokeRouter = require('strokerouter');
 var renderAdminPanel = require('./render-admin-panel');
 var getStoreForDoc = require('./get-store');
+var createPaneShiftControl = require('./pane-shift-control');
+var createPaneShifter = require('./pane-shifter');
 
 var TextStuff = {
   graph: null, 
@@ -10,7 +12,6 @@ var TextStuff = {
   store: null,
   sprigot: null,
   divider: null,
-  sprigot: null,
   contentZoneStrokeRouter: null,
 
   pane: null,
@@ -21,15 +22,14 @@ var TextStuff = {
   findUnreadLink: null,
   showGraphLink: null,
   downLink: null,
-  // editAvailable: true
-  editAvailable: false
+  editAvailable: true
+  // editAvailable: false
 };
 
-TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot, divider) {
+TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot) {
   this.graph = graph;
   this.treeRenderer = treeRenderer;
   this.sprigot = sprigot;
-  this.divider = divider;
 
   this.pane = sprigotSel.append('div')
     .classed('pane', true).attr('id', 'nongraphPane');
@@ -75,7 +75,20 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot, divider
       this.endEditing.bind(this));
     this.contentZoneStrokeRouter.absorbAllKeyUpEvents = true;
   }
-}
+
+  this.paneShifter = createPaneShifter({
+    state: 'half-expanded',
+    pane: this.pane
+  });
+
+  this.paneShiftControl = createPaneShiftControl({
+    parent: this.pane,
+    onClick: this.paneShifter.toggle,
+    expandDirection: -1
+  });
+
+  this.paneShiftControl.render();
+};
 
 TextStuff.initFindUnreadLink = function initFindUnreadLink() {
   this.findUnreadLink = this.pane.append('a')

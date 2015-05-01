@@ -11,20 +11,16 @@ var D3SprigBridge = require('./d3sprigbridge');
 var createCamera = require('./camera');
 var d3 = require('./lib/d3-small');
 var legacyStore = require('./legacy-store');
-var createPaneShiftControl = require('./pane-shift-control');
 
 function createSprigot(opts) {
 // Expected in opts: doc, loadDone.
 // Optional in opts: initialTargetSprigId.
 
-// var Sprigot = {
   var graph = null;
-  var divider = null;
   var camera = null;
   var controllerType = 'sprigot';
   var metaPressed = false;
   var docStrokeRouter = null;
-// };
 
   function init(initDone) {
     var baseMixin = createSprigotBaseMixin();
@@ -48,7 +44,7 @@ function createSprigot(opts) {
     // divider = createDivider();
 
     // divider.init(sprigotSel, graph, TextStuff, camera, this);
-    TextStuff.init(sprigotSel, graph, TreeRenderer, this, divider);
+    TextStuff.init(sprigotSel, graph, TreeRenderer, this);
 
     // divider.syncExpanderArrow();
     initDocEventResponders();

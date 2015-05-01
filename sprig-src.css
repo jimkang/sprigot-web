@@ -22,6 +22,8 @@ body {
 
 .arrowboard {
   background-color: transparent;
+  position: absolute;
+  top: 66%;
 }
 
 .node circle {
@@ -69,7 +71,6 @@ body {
   text-rendering: optimizeLegibility;
   background-color: #ffe;
   color: #403838;
-  margin-left: 8px;
   flex-grow: 6;
   flex-shrink: 0;
 }
