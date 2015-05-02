@@ -71,7 +71,7 @@ body {
   position: relative;
 
   transform: translate(0, 0);
-  transition: width 0.5s ease-out;
+  transition: width 0.8s ease-out;
 }
 
 .textpane {
@@ -180,21 +180,21 @@ section {
 
 .fully-expanded {
   width: 60%;
-  transition: width 0.5s ease;
+  transition: width 0.8s ease;
 }
 
 .half-expanded {
-  transition: width 0.5s ease;
+  transition: width 0.8s ease;
 }
 
 .collapsed {
   width: 30%;
-  transition: width 0.5s ease;
+  transition: width 0.8s ease;
 }
 
 .extra-wide {
   width: 150%;
-  transition: width 0.5s ease;
+  transition: width 0.8s ease;
 }
 
 .shift-left {

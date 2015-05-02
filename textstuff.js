@@ -181,7 +181,7 @@ TextStuff.uncollapseTextpane = function uncollapseTextpane(uncollapseDelay) {
   if (textPaneIsCollapsed) {
     if (isMobile()) {
       if (!uncollapseDelay) {
-        uncollapseDelay = 800;
+        uncollapseDelay = 1500;
       }
       expandState = 'fully-expanded';
       setTimeout(expandTextPane.bind(this), uncollapseDelay);
