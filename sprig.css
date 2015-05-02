@@ -23,8 +23,8 @@ body {
   background-color: transparent;
   position: absolute;
   top: 60%;
-  width: 1em;
-  height: 1em;
+  width: 48px;
+  height: 48px;
 }
 
 .arrowboard.against-right {

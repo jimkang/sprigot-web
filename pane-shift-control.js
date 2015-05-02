@@ -31,15 +31,15 @@ function createPaneShiftControl(opts) {
       });
 
     if (clickResponder) {
-      arrow.on('click', clickResponder);
+      board.on('click', clickResponder);
     }
   }
 
   function transformForDirection(direction) {
-    var transform = 'translate(3, 0) scale(1, 1)';
+    var transform = 'translate(27, 12) scale(1, 1)';
 
     if (direction < 1) {
-      transform = 'translate(18, 0) scale(-1, 1)';
+      transform = 'translate(18, 12) scale(-1, 1)';
     }
 
     return transform;
