@@ -1,12 +1,16 @@
 var d3 = require('./lib/d3-small');
+var isMobile = require('./is-mobile');
 
 function createPaneShifter(opts) {
   var instance = {
     toggle: toggle,
-    setState: setState
+    setState: setState,
+    syncToState: syncToState
   };
-    var pane;
+  
+  var pane;
   var currentState = 'half-expanded';
+  var expandDirection = 1;
 
   var stateComplements = {
     'fully-expanded': 'collapsed',
@@ -23,33 +27,42 @@ function createPaneShifter(opts) {
   if (opts) {
     pane = opts.pane;
     currentState = opts.state;
+    expandDirection = opts.expandDirection;
   }
 
   pane.datum(instance);
+  var parent = d3.select(pane.node().parentNode);
+
+  syncToState(currentState);
 
   function toggle() {
-    var nextState = getNextState(currentState);
+    syncToState(getNextState(currentState));
+  }
+
+  function syncToState(nextState) {
     setState(nextState);
     updateOtherShiftersToState(stateComplements[currentState]);
 
-    // document.dispatchEvent(new CustomEvent('pane-shift', {
-    //   detail: {
-    //     target: pane,
-    //     targetPaneState: currentState,
-    //     otherPanesStates: stateComplements[state]
-    //   }
-    // }));
+    var extraWidthNeeded = (currentState !== 'half-expanded');
+
+    parent.classed({
+      'extra-wide': extraWidthNeeded,
+      'shift-left': (extraWidthNeeded && expandDirection < 0),
+      'shift-right': (extraWidthNeeded && expandDirection > 0)
+    });
   }
 
   function getNextState(state) {
     var next = state;
+    var mobile = isMobile();
 
     if (state === 'collapsed') {
-      next = 'half-expanded';
+      next = mobile ? 'fully-expanded' : 'half-expanded';
     }
     else if (currentState == 'half-expanded') {
       next = 'fully-expanded';
     }
+
     return next;
   }
 
@@ -64,6 +77,7 @@ function createPaneShifter(opts) {
   }
 
   function updateOtherShiftersToState(state) {
+    // Careful about recursion here.
     d3.selectAll('.pane').each(updateOtherShifter);
 
     function updateOtherShifter(shifter) {

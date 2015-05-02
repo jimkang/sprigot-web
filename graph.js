@@ -7,6 +7,7 @@ var _ = require('lodash');
 var getStoreForDoc = require('./get-store');
 var createPaneShiftControl = require('./pane-shift-control');
 var createPaneShifter = require('./pane-shifter');
+var isMobile = require('./is-mobile');
 
 function createGraph() {
 
@@ -67,7 +68,9 @@ Graph.init = function init(sprigotSel, camera, treeRenderer,
   var note = this.pane.append('div').attr('id', 'zoom-note')
       .classed('info-note', true);
 
-  if (this.sprigot.isMobile()) {
+  var mobile = isMobile();
+
+  if (mobile) {
     note.text('You can pinch to zoom in and out of the graph. Drag to pan.');
   }
   else {
@@ -78,16 +81,26 @@ Graph.init = function init(sprigotSel, camera, treeRenderer,
 
   this.paneShifter = createPaneShifter({
     state: 'half-expanded',
-    pane: this.pane
+    pane: this.pane,
+    expandDirection: 1
   });
 
   this.paneShiftControl = createPaneShiftControl({
     parent: this.pane,
     onClick: this.paneShifter.toggle,
-    expandDirection: 1
+    expandDirection: 1,
+    onDarkBackground: true
   });
 
   this.paneShiftControl.render();
+
+  if (mobile) {
+    setTimeout(expandGraphPane.bind(this), 100);
+  }
+
+  function expandGraphPane() {
+    this.paneShifter.syncToState('fully-expanded');
+  }
 
   return this;
 };

@@ -5,6 +5,7 @@ var renderAdminPanel = require('./render-admin-panel');
 var getStoreForDoc = require('./get-store');
 var createPaneShiftControl = require('./pane-shift-control');
 var createPaneShifter = require('./pane-shifter');
+var isMobile = require('./is-mobile');
 
 var TextStuff = {
   graph: null, 
@@ -77,8 +78,9 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot) {
   }
 
   this.paneShifter = createPaneShifter({
-    state: 'half-expanded',
-    pane: this.pane
+    state: isMobile() ? 'collapsed' : 'half-expanded',
+    pane: this.pane,
+    expandDirection: -1
   });
 
   this.paneShiftControl = createPaneShiftControl({
@@ -116,7 +118,7 @@ TextStuff.syncTextpaneWithTreeNode = function syncTextpaneWithTreeNode(treeNode)
     document.dispatchEvent(new CustomEvent('node-focus-change', eventData));
   }
 
-  if (this.sprigot.isMobile()) {
+  if (isMobile()) {
     // this.divider.hideGraph();
     window.scrollTo(0, 0);
   }

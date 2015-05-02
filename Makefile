@@ -40,7 +40,7 @@ css:
 	$(BIN)/myth sprig-src.css sprig.css
 
 css-watch:
-	$(BIN)/myth -w sprig-src.css sprig.css
+	$(BIN)/myth --watch sprig-src.css sprig.css
 
 build: smash css
 	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m --keep-fnames -o sprigot-web.js

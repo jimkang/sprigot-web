@@ -3,23 +3,32 @@ function createPaneShiftControl(opts) {
   var arrow;
   var clickResponder;
   var expandDirection = 1;
+  var onDarkBackground;
 
   if (opts) {
     parent = opts.parent;
     clickResponder = opts.onClick;
     expandDirection = opts.expandDirection;
+    onDarkBackground = opts.onDarkBackground;
   }
 
   function render() {
-    var board = parent.append('svg').classed('arrowboard', true);
-    arrow = board.append('polygon').attr({
-      id: 'expanderArrow',
-      fill: 'rgba(0, 0, 64, 0.4)',
-      stroke: '#E0EBFF',
-      'stroke-width': 1,
-      points: '0,0 16,12 0,24',
-      transform: transformForDirection(expandDirection)
+    var board = parent.append('svg').classed({
+      'arrowboard': true,
+      'against-left': (expandDirection < 0),
+      'against-right': (expandDirection > 0)
     });
+
+    arrow = board.append('polygon')
+      .attr({
+        id: 'expanderArrow',
+        points: '0,0 16,12 0,24',
+        transform: transformForDirection(expandDirection)
+      })
+      .classed({
+        'arrow': true,
+        'on-dark': onDarkBackground
+      });
 
     if (clickResponder) {
       arrow.on('click', clickResponder);

@@ -23,7 +23,27 @@ body {
 .arrowboard {
   background-color: transparent;
   position: absolute;
-  top: 66%;
+  top: 60%;
+  width: 1em;
+  height: 1em;
+}
+
+.arrowboard.against-right {
+  right: 0.1em;
+}
+
+.arrowboard.against-left {
+  left: 0.1em;
+}
+
+.arrow {
+  stroke: hsla(0, 0%, 50%, 0.3);
+  stroke-width: 1;
+  fill: rgba(0, 0, 64, 1);
+}
+
+.arrow.on-dark {
+  fill: rgb(197, 64, 58);
 }
 
 .node circle {
@@ -49,21 +69,7 @@ body {
   flex: 1 1 auto;
   width: 44%;
   min-width: 200px;
-}
-
-.collapsedPane {
-  width: 0;
-  min-height: 0px;
-}
-
-.collapsedPane #svgBoard {
-  width: 0;
-  min-height: 0px;
-}
-
-.expandedPane {
-  width: 92%;
-  min-width: 200px;
+  position: relative;
 }
 
 .textpane {
@@ -87,10 +93,11 @@ body {
 .textpane a:visited {
   color: #346;
 }
-
+/*
 .collapsedPane .textpane {
   display: none;
 }
+*/
 
 #graphPane {
   order: 1;
@@ -185,6 +192,50 @@ section {
   list-style-type: none;
 }
 
+.fully-expanded {
+  width: 60%;
+}
+
+.half-expanded {
+
+}
+
+.collapsed {
+  width: 30%;
+}
+
+.extra-wide {
+  width: 150%;
+}
+
+.shift-left {
+  transform: translate(-32%, 0);
+}
+
+.shift-right {
+  transform: translate(0, 0);
+}
+
+.contentZone {
+  margin-left: 0.7em;
+}
+
+/*
+.collapsedPane {
+  width: 0;
+  min-height: 0px;
+}
+
+.collapsedPane #svgBoard {
+  width: 0;
+  min-height: 0px;
+}
+
+.expandedPane {
+  width: 92%;
+  min-width: 200px;
+}*/
+
 /* Firefox */
 @-moz-document url-prefix(http) {
   #nongraphPane {
@@ -213,77 +264,10 @@ section {
 @media only screen and (max-device-height: 568px) {
   /* Works on iOS 7 */
   section {
-    /*height: 568px;*/
-    width: 320px;
+    /*width: 320px;*/
   }
 
-  #graphPane {
-    order: 3;
-    flex: 1 6 100px;
-    width: 95%;
-  }
-
-  .divider {
-    display: none;
-    order: 2;
-    flex: 0 0 0px;
-  }
-
-  #nongraphPane {
-    width: 100%;
-    order: 1;
-    margin-top: 8px;
-    flex: 1 1 80%;
-
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Works on iOS 6 */
-  section.is-not-ios-seven {
-    height: 568px;
-
-    flex-direction: column;
-
-    /* Without this, Safari won't respect -webkit-flex-direction. */
-    -webkit-box-orient: vertical;
-  }
-
-  #graphPane.is-not-ios-seven {
-    order: 3;
-    flex: 1 6 100px;
-    width: 95%;
-  }
-
-  .divider.is-not-ios-seven {
-    display: none;
-    order: 2;
-    flex: 0 0 0px;
-  }
-
-  #nongraphPane.is-not-ios-seven {
-    width: 100%;
-    order: 1;
-    margin-top: 8px;
-    flex: 1 1 80%;
-  }
-  
-
-  #svgBoard {
-    height: 250px;
-  }
-
-  .expandedPane {
-    flex: 1 1 auto;
-  }
-
-  .expandedPane #svgBoard {
-    height: 100%;
-  }
-
-  .collapsedPane {
-    max-height: 0;
-    height: 0;
-    flex: 1 1 0;
+  .fully-expanded {
+    width: 50%;
   }
 }

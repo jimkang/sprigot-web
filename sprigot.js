@@ -11,6 +11,7 @@ var D3SprigBridge = require('./d3sprigbridge');
 var createCamera = require('./camera');
 var d3 = require('./lib/d3-small');
 var legacyStore = require('./legacy-store');
+var isMobile = require('./is-mobile');
 
 function createSprigot(opts) {
 // Expected in opts: doc, loadDone.
@@ -272,11 +273,6 @@ function createSprigot(opts) {
     );
   }
 
-  function isMobile() {
-    var isMobileMediaQuery = 'only screen and (max-device-height: 568px)';
-    return (window.matchMedia(isMobileMediaQuery).matches);
-  }
-
   function tagElementsWithCSSHackClasses() {
     if (isMobile() &&
       !navigator.userAgent.match(/(iPad|iPhone);.*CPU.*OS 7_\d/i)) {
@@ -299,7 +295,6 @@ function createSprigot(opts) {
     respondToMoveChildLeftCmd: respondToMoveChildLeftCmd,
     respondToMoveChildRightCmd: respondToMoveChildRightCmd,
     moveFocusNodeInDirection: moveFocusNodeInDirection,
-    isMobile: isMobile,
     tagElementsWithCSSHackClasses: tagElementsWithCSSHackClasses,
     opts: opts // TODO: Rewrite textstuff so it doesn't as for this.
   };
