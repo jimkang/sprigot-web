@@ -68,8 +68,10 @@ body {
 .pane {
   flex: 1 1 auto;
   width: 44%;
-  min-width: 200px;
   position: relative;
+
+  transform: translate(0, 0);
+  transition: width 0.5s ease-out;
 }
 
 .textpane {
@@ -193,18 +195,21 @@ section {
 
 .fully-expanded {
   width: 60%;
+  transition: width 0.5s ease;
 }
 
 .half-expanded {
-
+  transition: width 0.5s ease;
 }
 
 .collapsed {
   width: 30%;
+  transition: width 0.5s ease;
 }
 
 .extra-wide {
   width: 150%;
+  transition: width 0.5s ease;
 }
 
 .shift-left {
@@ -218,22 +223,6 @@ section {
 .contentZone {
   margin-left: 0.7em;
 }
-
-/*
-.collapsedPane {
-  width: 0;
-  min-height: 0px;
-}
-
-.collapsedPane #svgBoard {
-  width: 0;
-  min-height: 0px;
-}
-
-.expandedPane {
-  width: 92%;
-  min-width: 200px;
-}*/
 
 /* Firefox */
 @-moz-document url-prefix(http) {

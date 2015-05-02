@@ -69,8 +69,11 @@ body {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   width: 44%;
-  min-width: 200px;
   position: relative;
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  transition: width 0.5s ease-out;
 }
 
 .textpane {
@@ -222,47 +225,40 @@ section {
 
 .fully-expanded {
   width: 60%;
+  transition: width 0.5s ease;
+}
+
+.half-expanded {
+  transition: width 0.5s ease;
 }
 
 .collapsed {
   width: 30%;
+  transition: width 0.5s ease;
 }
 
 .extra-wide {
   width: 150%;
+  transition: width 0.5s ease;
 }
 
 .shift-left {
   -webkit-transform: translate(-32%, 0);
   -ms-transform: translate(-32%, 0);
   transform: translate(-32%, 0);
+  /*transition: transform 0.5s ease-out;*/
 }
 
 .shift-right {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
+  /*transition: transform 0.5s ease-out;*/
 }
 
 .contentZone {
   margin-left: 0.7em;
 }
-
-/*
-.collapsedPane {
-  width: 0;
-  min-height: 0px;
-}
-
-.collapsedPane #svgBoard {
-  width: 0;
-  min-height: 0px;
-}
-
-.expandedPane {
-  width: 92%;
-  min-width: 200px;
-}*/
 
 /* Firefox */
 
