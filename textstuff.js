@@ -12,7 +12,6 @@ var TextStuff = {
   treeRenderer: null,
   store: null,
   sprigot: null,
-  divider: null,
   contentZoneStrokeRouter: null,
 
   pane: null,
@@ -102,7 +101,9 @@ TextStuff.initFindUnreadLink = function initFindUnreadLink() {
     .on('click', this.sprigot.respondToFindUnreadCmd.bind(this.sprigot));
 };
 
-TextStuff.syncTextpaneWithTreeNode = function syncTextpaneWithTreeNode(treeNode) {
+TextStuff.syncTextpaneWithTreeNode = function syncTextpaneWithTreeNode(
+  treeNode, uncollapseDelay) {
+
   this.textcontent.datum(treeNode);
   this.titleField.datum(treeNode);
 
@@ -118,17 +119,14 @@ TextStuff.syncTextpaneWithTreeNode = function syncTextpaneWithTreeNode(treeNode)
     document.dispatchEvent(new CustomEvent('node-focus-change', eventData));
   }
 
-  if (isMobile()) {
-    // this.divider.hideGraph();
-    window.scrollTo(0, 0);
-  }
+  this.uncollapseTextpane(uncollapseDelay);
 }
 
 TextStuff.showTextpaneForTreeNode = function showTextpaneForTreeNode(treeNode) {
   this.syncTextpaneWithTreeNode(treeNode);
 
   d3.selectAll('#textpane .contentZone,.editcontrol').style('display', 'block');
-  this.contentZone.style('display', 'block');    
+  this.contentZone.style('display', 'block');
   this.uncollapseTextpane();
 }
 
@@ -163,8 +161,12 @@ TextStuff.fadeInControlLinks = function fadeInControlLinks(transitionTime) {
 }
 
 TextStuff.initialShow = function initialShow(treeNode) {
+  var uncollapseDelay = 0;
+  if (isMobile()) {
+    uncollapseDelay = 1500;
+  }
   setTimeout(function doIt() {
-    this.syncTextpaneWithTreeNode(treeNode);
+    this.syncTextpaneWithTreeNode(treeNode, uncollapseDelay);
     this.fadeInTextPane(750);
     this.fadeInControlLinks(800);
   }
@@ -172,10 +174,28 @@ TextStuff.initialShow = function initialShow(treeNode) {
   725);
 }
 
-TextStuff.uncollapseTextpane = function uncollapseTextpane() {
-  var textPaneIsCollapsed = this.pane.classed('collapsedPane');
+TextStuff.uncollapseTextpane = function uncollapseTextpane(uncollapseDelay) {
+  var textPaneIsCollapsed = this.pane.classed('collapsed');
+  var expandState = 'half-expanded';
+
   if (textPaneIsCollapsed) {
-    this.divider.toggleGraphExpansion();
+    if (isMobile()) {
+      if (!uncollapseDelay) {
+        uncollapseDelay = 800;
+      }
+      expandState = 'fully-expanded';
+      setTimeout(expandTextPane.bind(this), uncollapseDelay);
+    }
+    else {
+      if (isNaN(uncollapseDelay)) {
+        uncollapseDelay = 0;
+      }
+      setTimeout(expandTextPane.bind(this), uncollapseDelay);
+    }
+  }
+
+  function expandTextPane() {
+    this.paneShifter.syncToState(expandState);
   }
 }
 

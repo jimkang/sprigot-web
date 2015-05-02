@@ -2,7 +2,6 @@ var createSprigotBaseMixin = require('./sprigotbasemixin');
 var createStrokeRouter = require('strokerouter');
 var loadATypeKit = require('./load_a_typekit');
 var Historian = require('./historian');
-// var createDivider = require('./divider');
 var TextStuff = require('./textstuff');
 var createGraph = require('./graph');
 var TreeRenderer = require('./treerenderer');
@@ -42,12 +41,9 @@ function createSprigot(opts) {
     var sprigotSel = d3.select('.sprigot');  
     graph.init(sprigotSel, camera, TreeRenderer, TextStuff, Historian,
       this);
-    // divider = createDivider();
-
-    // divider.init(sprigotSel, graph, TextStuff, camera, this);
+    
     TextStuff.init(sprigotSel, graph, TreeRenderer, this);
 
-    // divider.syncExpanderArrow();
     initDocEventResponders();
 
     tagElementsWithCSSHackClasses();
@@ -252,12 +248,6 @@ function createSprigot(opts) {
     }
   }
 
-  function respondToSwitchToGraphCmd() {
-    if (!graph.pane.classed('expandedPane')) {
-      // divider.toggleGraphExpansion();
-    }
-  }
-
   function respondToMoveChildLeftCmd() {
     moveFocusNodeInDirection(-1);
   }
@@ -291,7 +281,6 @@ function createSprigot(opts) {
     respondToDeleteSprigCmd: respondToDeleteSprigCmd,
     respondToNewSprigotCmd: respondToNewSprigotCmd,
     respondToFindUnreadCmd: respondToFindUnreadCmd,
-    respondToSwitchToGraphCmd: respondToSwitchToGraphCmd,
     respondToMoveChildLeftCmd: respondToMoveChildLeftCmd,
     respondToMoveChildRightCmd: respondToMoveChildRightCmd,
     moveFocusNodeInDirection: moveFocusNodeInDirection,

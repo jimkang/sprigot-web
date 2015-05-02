@@ -95,11 +95,6 @@ body {
 .textpane a:visited {
   color: #346;
 }
-/*
-.collapsedPane .textpane {
-  display: none;
-}
-*/
 
 #graphPane {
   order: 1;
@@ -108,12 +103,6 @@ body {
 
   display: flex;
   flex-direction: column;
-}
-
-.divider {
-  width: 38px;
-  min-width: 38px;
-  height: 48px;
 }
 
 .textcontent {
@@ -170,10 +159,6 @@ section {
   margin: 0;
   height: 100%;
   width: 100% /* needed for Firefox */   
-}
-
-.divider {
-  order: 2;
 }
 
 #nongraphPane {

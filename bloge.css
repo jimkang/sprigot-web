@@ -78,12 +78,6 @@ body {
   }
 }
 
-.divider {
-  width: 38px;
-  min-width: 38px;
-  height: 48px;
-}
-
 .textcontent {
   font-weight: normal;  
   font-size: 20px;
@@ -158,11 +152,6 @@ section {
   -webkit-box-ordinal-group: 1;
 }
 
-.divider {
-  order: 2;
-  -webkit-box-ordinal-group: 2;
-}
-
 #nongraphPane {
   order: 3;
   -webkit-box-ordinal-group: 3;
@@ -210,15 +199,6 @@ section {
     width: 95%;
   }
 
-  .divider {
-    display: none;
-    order: 2;
-    -webkit-order: 2;
-    -webkit-box-ordinal-group: 2;
-    flex: 0 0 0px;
-    -webkit-flex: 0 0 0px;
-  }
-
   #nongraphPane {
     width: 100%;
     -webkit-order: 1;
@@ -246,14 +226,6 @@ section {
     flex: 1 6 100px;
     -webkit-flex: 1 6 100px;
     width: 95%;
-  }
-
-  .divider.is-not-ios-seven {
-    display: none;
-    order: 2;
-    -webkit-box-ordinal-group: 2;
-    flex: 0 0 0px;
-    -webkit-flex: 0 0 0px;
   }
 
   #nongraphPane.is-not-ios-seven {
