@@ -156,6 +156,7 @@ body {
   float: right;
   padding-left: 8px;
   padding-right: 8px;
+  margin-top: 0;
   -webkit-flex-basis: 1em;
   -ms-flex-preferred-size: 1em;
   flex-basis: 1em;
@@ -166,8 +167,7 @@ body {
   color: rgba(255, 255, 255, 0.25);
   padding-left: 1em;
   padding-right: 1em;
-  padding-bottom: 1em;
-  height: 2em;
+  padding-bottom: 0;
 }
 
 section {
