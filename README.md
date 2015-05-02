@@ -1,7 +1,7 @@
 sprigot-web
 ==================
 
-This is a browser app that does some stuff.
+This is the web app for [Sprigot](http://sprigot.com). Apologies – it is halfway through a rewrite after a year of dormancy, so things are not all that consistent.
 
 Installation
 ------------
@@ -12,7 +12,7 @@ Installation
 Usage
 -----
 
-    make run    
+    make run
 
 Or run [wzrd](https://github.com/maxogden/wzrd) directly:
 

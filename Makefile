@@ -24,7 +24,7 @@ D3_LIBRARY_FILES = \
 smash: $(D3_LIBRARY_FILES)
 	$(BIN)/smash $(D3_LIBRARY_FILES) > lib/d3-small.js
 
-run:
+run: css
 	wzrd index.js -- \
 		-d \
 		-x lodash \
