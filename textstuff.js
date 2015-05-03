@@ -277,7 +277,7 @@ TextStuff.endEditing = function endEditing() {
 
 TextStuff.respondToEmphasisCheckChange = function respondToEmphasisCheckChange() {
   if (this.graph.focusNode) {
-    this.graph.focusNode.emphasize = this.emphasizeCheckbox.node().checked;
+    this.graph.focusNode.emphasize = d3.event.srcElement.checked;
     this.treeRenderer.update(this.graph.nodeRoot);
     var docId = this.sprigot.opts.doc.id;
     getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
