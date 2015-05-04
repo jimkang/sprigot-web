@@ -44,9 +44,11 @@ function createSpriglog(opts) {
     else if (sprigTree) {
       d3.select('title').text('Sprigot - ' + sprigTree.title);
 
+      var tree = D3SprigBridge.sanitizeTreeForD3(sprigTree);
+      tree.depth = 0;
+
       var root = d3.select('.bloge').append('ul').classed('sprig', true);
-      renderTreeToRoot
-        .bind(root.node())(D3SprigBridge.sanitizeTreeForD3(sprigTree));
+      renderTreeToRoot.bind(root.node())(tree);
 
       Historian.syncURLToSprigId(opts.doc.rootSprig);
       opts.loadDone();
@@ -60,6 +62,7 @@ function createSpriglog(opts) {
     // D3 will set `this` up as the root element.
     var root = d3.select(this);
     root.attr('id', tree.id);
+    root.classed('level-' + tree.depth, true);
 
     // .attr('class', 
     //   function getCSSClasses(d) {
@@ -107,6 +110,8 @@ function createSpriglog(opts) {
     // var sprigsToRemove = sprigs.exit();
     // sprigsToRemove.remove();
     if (tree.children) {
+      setDepthOnChildren(tree);
+
       var childSprigs = root.selectAll('ul.sprig')
         .data(tree.children, accessor());
 
@@ -126,6 +131,16 @@ function createSpriglog(opts) {
 
     d3.selectAll('#' + sprig.id + ' > :not(.title)')
       .classed('displaying-hidden', !body.classed('displaying-hidden'));
+  }
+
+  function setDepthOnChildren(tree) {
+    if (!isNaN(tree.depth)) {
+      tree.children.forEach(setDepth);
+    }
+
+    function setDepth(child) {
+      child.depth = tree.depth + 1;
+    }
   }
 
   return {

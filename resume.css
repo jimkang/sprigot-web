@@ -29,7 +29,7 @@ body {
 
 .bloge .title {
   font-family: brandon-grotesque, 'Helvetica Neue', Helvetica, sans-serif;
-  font-size: 42px;
+  font-size: 2em;
   text-transform: uppercase;
   margin-left: -2px;
 }
@@ -126,6 +126,7 @@ section {
 
 .sprig {
   /*margin-left: 1em;*/
+  max-width: 640px;
 }
 
 ul.sprig {
@@ -145,9 +146,8 @@ section > .sprig > li > .sprig {
   margin-bottom: 0.5em;
 }
 
-.level-1 {
-  margin-left: 0;
-  margin-bottom: 0.5em;
+.level-1 .title {
+  font-size: 1.5em;
 }
 
 .level-2 {
@@ -155,38 +155,36 @@ section > .sprig > li > .sprig {
   color: #58585c;
 }
 
-.level-2.textpane {
-  margin-top: 0.5em;
-  margin-bottom: 0.25em;
-}
-
 .level-2 .title {
   font-size: 21px;
   color: #404044;
 }
-
-.level-3 {
+/*
+.level-2.textpane {
+  margin-top: 0.5em;
+  margin-bottom: 0.25em;
 }
+*/
 
+.level-3 .title {
+  font-size: 1.2em;
+}
+/*
 .level-3.textpane {
   margin-top: 0.25em;
   margin-bottom: 0.25em;
-}
-
-.level-3 .title {
-  font-size: 18px;
-}
+}*/
 
 .level-4 {
 }
 
-.level-4.textpane {
+/*.level-4.textpane {
   margin-top: 0.25em;
   margin-bottom: 0.25em;
 }
-
+*/
 .level-4 .title {
-  font-size: 16px;
+  font-size: 1.0em;
 }
 
 .aside {
