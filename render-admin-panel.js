@@ -6,12 +6,14 @@ function renderAdminPanel(opts) {
   var root;
   var controlRenderer;
 
+  // TODO: Use events instead of this craziness.
   var respondToEmphasisCheckChange;
   var respondToAddChildSprigCmd;
   var respondToNewSprigotCmd;
   var respondToDeleteSprigCmd;
   var respondToMoveChildLeftCmd;
   var respondToMoveChildRightCmd;
+  var respondToTagsChange;
 
   if (opts) {
     root = opts.root;
@@ -23,6 +25,7 @@ function renderAdminPanel(opts) {
       respondToDeleteSprigCmd = opts.responders.respondToDeleteSprigCmd;
       respondToMoveChildLeftCmd = opts.responders.respondToMoveChildLeftCmd;
       respondToMoveChildRightCmd = opts.responders.respondToMoveChildRightCmd;
+      respondToTagsChange = opts.responders.respondToTagsChange;
     }
   }
 
@@ -85,7 +88,8 @@ function renderAdminPanel(opts) {
         value: 'tags go here'
       },
       onKeyUp: eatEvent,
-      onKeyDown: eatEvent
+      onKeyDown: eatEvent,
+      onFocusLoss: respondToTagsChange
     },
     {
       id: 'format-label',
@@ -127,13 +131,12 @@ function renderAdminPanel(opts) {
 
   function respondToFocusChange(e) {
     var focusNode = e.detail.focusNode;
+    var tagsEl = d3.select('#tags-field').node();
 
     emphasizeCheckbox.node().checked = focusNode.emphasize;
-    d3.select('#tags-field').node().value =
-      focusNode.tags ? focusNode.tags.join(' ') : '';
+    tagsEl.value = focusNode.tags ? focusNode.tags.join(' ') : '';
     d3.select('#formats-field').node().value =
       focusNode.formats ? focusNode.formats.join(' ') : '';
-
   }
 }
 

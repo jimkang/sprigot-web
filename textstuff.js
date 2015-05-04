@@ -52,6 +52,7 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot) {
       root: this.textpane,
       responders: {
         respondToEmphasisCheckChange: this.respondToEmphasisCheckChange.bind(this),
+        respondToTagsChange: this.respondToTagsChange.bind(this),
         respondToAddChildSprigCmd: sprigot.respondToAddChildSprigCmd.bind(sprigot),
         respondToNewSprigotCmd: sprigot.respondToNewSprigotCmd.bind(sprigot),
         respondToDeleteSprigCmd: sprigot.respondToDeleteSprigCmd.bind(sprigot),
@@ -283,6 +284,14 @@ TextStuff.respondToEmphasisCheckChange = function respondToEmphasisCheckChange()
     getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
   }
 }
+
+TextStuff.respondToTagsChange = function respondToTagsChange(tagsValue) {
+  if (this.graph.focusNode) {
+    this.graph.focusNode.tags = d3.event.srcElement.value.split(' ');
+    var docId = this.sprigot.opts.doc.id;
+    getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
+  }
+};
 
 TextStuff.startEditing = function startEditing() {
   d3.event.stopPropagation();

@@ -41,7 +41,8 @@ function createControlRenderer(opts) {
       .append(createElement)
       .classed(baseClass, true)
       .attr('id', getId)
-      .on('click', respondToClick);
+      .on('click', respondToClick)
+      .on('blur', respondToFocusLoss);
 
     controlHousings.exit()
       .classed('fade-out', true)
@@ -66,6 +67,12 @@ function createControlRenderer(opts) {
   function respondToClick(controlDef) {
     if (controlDef.onClick) {
       controlDef.onClick();
+    }
+  }
+
+  function respondToFocusLoss(controlDef) {
+    if (controlDef.onFocusLoss) {
+      controlDef.onFocusLoss();
     }
   }
 
