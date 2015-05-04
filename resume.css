@@ -132,6 +132,10 @@ ul.sprig {
   list-style-type: none;
 }
 
+section > .sprig > li > .sprig {
+  padding-left: 0;
+}
+
 .sprigbody {
   padding-top: 0.5em;
 }
