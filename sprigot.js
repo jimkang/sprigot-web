@@ -54,7 +54,7 @@ function createSprigot(opts) {
   function load() {
     var rootId = getRootIdFromOpts(opts);
     Historian.init(graph.treeNav, rootId);
-
+    opts.format = undefined;
     legacyStore.getSprigTree(rootId, opts.format, loadTree.bind(this));
 
     function loadTree(error, tree) {
