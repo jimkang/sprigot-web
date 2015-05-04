@@ -6,8 +6,8 @@ body {
 	font-family: garamond, adobe-garamond-pro, serif;
   font-size: 24px;
 
-  background-color: hsl(34, 34%, 94%);
-  color: hsl(230, 18%, 29%);
+  background-color: hsl(34, 30%, 94%);
+  color: hsl(230, 8%, 25%);
   
   margin: 0;
   height: 100%;
@@ -163,7 +163,9 @@ ul.sprig {
 }
 
 a:link {
-  color: hsl(230, 38%, 37%);
+  color: hsl(230, 20%, 37%);
+  text-decoration: none;
+  border-bottom: hsla(230, 38%, 37%, 0.5) dashed 1px;
 }
 
 a:visited {
