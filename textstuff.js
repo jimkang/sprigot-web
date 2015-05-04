@@ -53,6 +53,7 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot) {
       responders: {
         respondToEmphasisCheckChange: this.respondToEmphasisCheckChange.bind(this),
         respondToTagsChange: this.respondToTagsChange.bind(this),
+        respondToFormatsChange: this.respondToFormatsChange.bind(this),
         respondToAddChildSprigCmd: sprigot.respondToAddChildSprigCmd.bind(sprigot),
         respondToNewSprigotCmd: sprigot.respondToNewSprigotCmd.bind(sprigot),
         respondToDeleteSprigCmd: sprigot.respondToDeleteSprigCmd.bind(sprigot),
@@ -280,18 +281,28 @@ TextStuff.respondToEmphasisCheckChange = function respondToEmphasisCheckChange()
   if (this.graph.focusNode) {
     this.graph.focusNode.emphasize = d3.event.srcElement.checked;
     this.treeRenderer.update(this.graph.nodeRoot);
-    var docId = this.sprigot.opts.doc.id;
-    getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
+    this.saveSprigFromFocusNode();
   }
 }
 
-TextStuff.respondToTagsChange = function respondToTagsChange(tagsValue) {
+TextStuff.respondToTagsChange = function respondToTagsChange() {
   if (this.graph.focusNode) {
     this.graph.focusNode.tags = d3.event.srcElement.value.split(' ');
-    var docId = this.sprigot.opts.doc.id;
-    getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
+    this.saveSprigFromFocusNode();
   }
 };
+
+TextStuff.respondToFormatsChange = function respondToFormatsChange() {
+  if (this.graph.focusNode) {
+    this.graph.focusNode.formats = d3.event.srcElement.value.split(' ');
+    this.saveSprigFromFocusNode();
+  }
+};
+
+TextStuff.saveSprigFromFocusNode = function saveSprigFromFocusNode() {
+  var docId = this.sprigot.opts.doc.id;
+  getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
+}
 
 TextStuff.startEditing = function startEditing() {
   d3.event.stopPropagation();

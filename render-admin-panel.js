@@ -26,6 +26,7 @@ function renderAdminPanel(opts) {
       respondToMoveChildLeftCmd = opts.responders.respondToMoveChildLeftCmd;
       respondToMoveChildRightCmd = opts.responders.respondToMoveChildRightCmd;
       respondToTagsChange = opts.responders.respondToTagsChange;
+      respondToFormatsChange = opts.responders.respondToFormatsChange;
     }
   }
 
@@ -103,7 +104,8 @@ function renderAdminPanel(opts) {
         value: ''
       },
       onKeyUp: eatEvent,
-      onKeyDown: eatEvent
+      onKeyDown: eatEvent,
+      onFocusLoss: respondToFormatsChange
     }
   ]);
 
