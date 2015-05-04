@@ -26,7 +26,7 @@ function createSpriglog(opts) {
       return;
     }
 
-    loadATypeKit('//use.typekit.net/med0yzx.js', initDone);
+    loadATypeKit('//use.typekit.net/uoo5gyw.js', initDone);
   }
 
   function load() {
