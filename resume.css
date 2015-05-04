@@ -4,6 +4,7 @@ html {
 
 body {
 	font-family: garamond, adobe-garamond-pro, serif;
+  font-size: 24px;
   background-color: #eee;
 
   color: #404044;
@@ -13,7 +14,6 @@ body {
 }
 
 .textpane {
-  font-size: 24px;
   margin-left: 8px;
 }
 
@@ -39,7 +39,8 @@ body {
   font-size: 18px;
   margin-top: 1em;
   float: right;
-}
+}/*
+
 
 .textpane a {
   text-decoration: none;
@@ -52,25 +53,9 @@ body {
 
 .textpane a:visited {
   color: #346;
-}
+}*/
 
-/* TODO: This class is no longer used. Replace it. */
-
-.collapsedPane .textpane {
-  display: none;
-}
-
-#graphPane {
-  min-width: 200px;
-}
-
-@-moz-document url-prefix(http) {
-  #graphPane {
-    height: 100%; /* Need for Firefox */
-  }
-}
-
-.textcontent {
+/*.textcontent {
   font-weight: normal;  
   font-size: 20px;
   padding-left: 1.2em;
@@ -82,7 +67,7 @@ body {
 .textcontent ul {
   list-style-type: circle;
 }
-
+*/
 .editing {
   border: 4px red dashed;
 }
@@ -139,18 +124,12 @@ section {
   width: 100% /* needed for Firefox */
 }
 
-#graphPane {
-  order: 1;
-  -webkit-box-ordinal-group: 1;
-}
-
-#nongraphPane {
-  order: 3;
-  -webkit-box-ordinal-group: 3;
-}
-
 .sprig {
-  /*border: 1px solid #e40;*/
+  /*margin-left: 1em;*/
+}
+
+ul.sprig {
+  list-style-type: none;
 }
 
 .sprigbody {
@@ -240,19 +219,11 @@ section {
   cursor: pointer;
 }
 
-.click-to-display .sprigbody {
-  display: none;
+.hidden {
+  display: none;  
 }
 
-.displaying-hidden .sprigbody {
+.displaying-hidden {
   display: block;  
   cursor: pointer;
-}
-
-/* Firefox */
-@-moz-document url-prefix(http) {
-  #nongraphPane {
-    /* When the content is taller than the window, this will let it scroll. */
-    height: 100%;
-  }
 }

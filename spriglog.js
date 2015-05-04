@@ -2,6 +2,8 @@ var createSprigotBaseMixin = require('./sprigotbasemixin');
 var loadATypeKit = require('./load_a_typekit');
 var Historian = require('./historian');
 var getStoreForDoc = require('./get-store');
+var D3SprigBridge = require('./d3sprigbridge');
+var accessor = require('accessor');
 
 function createSpriglog(opts) {
   // Expected in opts: doc, loadDone.
@@ -32,19 +34,19 @@ function createSpriglog(opts) {
 
     Historian.init(null, docId);
 
-    getStoreForDoc(docId).getSprigList(docId, opts.format, renderList);
+    getStoreForDoc(docId).getSprigTree(docId, opts.format, renderTree);
   }
 
-  function renderList(error, sprigList) {
+  function renderTree(error, sprigTree) {
     if (error) {
       opts.loadDone(error, null);
     }
-    else if (sprigList) {
-      if (sprigList.length > 0) {
-        d3.select('title').text('Sprigot - ' + sprigList[0].title);
-      }
+    else if (sprigTree) {
+      d3.select('title').text('Sprigot - ' + sprigTree.title);
 
-      render(sprigList);
+      var root = d3.select('.bloge').append('ul').classed('sprig', true);
+      renderTreeToRoot
+        .bind(root.node())(D3SprigBridge.sanitizeTreeForD3(sprigTree));
 
       Historian.syncURLToSprigId(opts.doc.rootSprig);
       opts.loadDone();
@@ -53,47 +55,78 @@ function createSpriglog(opts) {
       opts.loadDone(new Error('Sprig tree not found.'));
     }
   }
-  
-  function render(sprigList) {
-    var sprigs = spriglogSel.selectAll('.sprig')
-      .data(sprigList, function(d) { return d.id; });
 
-    var newSprigs = sprigs.enter().append('div').attr('class', 
-      function getCSSClasses(d) {
-        var cssClasses = ['sprig', 'textpane'];
-        if (d.tags) {
-          cssClasses = cssClasses.concat(d.tags);
-        }
-        return cssClasses.join(' ');
-      }
-    );
+  function renderTreeToRoot(tree) {
+    // D3 will set `this` up as the root element.
+    var root = d3.select(this);
+    root.attr('id', tree.id);
 
-    newSprigs.append('div').classed('title', true);
-    newSprigs.append('div').classed('sprigbody', true);
-    if (opts.doc.showStamps) {
-      newSprigs.append('div').classed('stamps', true);
-    }
-    newSprigs.filter('.click-to-display').on('click', function displayBody() {
-      var sprig = d3.select(this);
-      sprig.classed('displaying-hidden', !sprig.classed('displaying-hidden'));
-    });
+    // .attr('class', 
+    //   function getCSSClasses(d) {
+    //     var cssClasses = ['sprig', 'textpane'];
+    //     if (d.tags) {
+    //       cssClasses = cssClasses.concat(d.tags);
+    //     }
+    //     return cssClasses.join(' ');
+    //   }
+    // );
+    var collapsed = (tree.tags && tree.tags.indexOf('click-to-display') !== -1);
 
-    sprigs.select('.title').text(function getTitle(d) {return d.title;});
+    var titleItem = root.append('li')
+      .classed('title', true)
+      .text(tree.title);
 
-    if (!opts.doc.showStamps) {
-      sprigs.select('.stamps').text(function getStamps(d) {
-        var createdDate = new Date(d.created);
-        stamp = createdDate.toLocaleString();
-        return stamp;
-      });
+    root.append('li')
+      .classed({
+        sprigbody: true,
+        hidden: collapsed
+      })
+      .html(tree.body);
+
+    if (collapsed) {
+      root.classed('click-to-display', true);
+      titleItem.on('click', displayBodyAndImmediateChildren);
     }
 
-    sprigs.select('.sprigbody').html(function getBody(d) {return d.body;});
+    // if (opts.doc.showStamps) {
+    //   root.append('div').classed('stamps', true);
+    // }
     
-    var sprigsToRemove = sprigs.exit();
-    sprigsToRemove.remove();
+    // newSprigs.filter('.click-to-display').on('click', displayBody);
+
+    // if (!opts.doc.showStamps) {
+    //   sprigs.select('.stamps').text(function getStamps(d) {
+    //     var createdDate = new Date(d.created);
+    //     stamp = createdDate.toLocaleString();
+    //     return stamp;
+    //   });
+    // }
+
+    // sprigs.select('.sprigbody').html(bodyGet);
+    
+    // var sprigsToRemove = sprigs.exit();
+    // sprigsToRemove.remove();
+    if (tree.children) {
+      var childSprigs = root.selectAll('ul.sprig')
+        .data(tree.children, accessor());
+
+      var childItems = childSprigs.enter().append('li')
+        .classed('hidden', collapsed);
+
+      var childLists = childItems.append('ul').classed('sprig', true);
+      childLists.each(renderTreeToRoot);
+    }
   }
 
+  function displayBodyAndImmediateChildren(sprig) {
+    // Don't let the click bubble up to parent elements.
+    d3.event.stopPropagation();
+
+    var body = d3.select(this.parentNode).select('.sprigbody');
+
+    d3.selectAll('#' + sprig.id + ' > :not(.title)')
+      .classed('displaying-hidden', !body.classed('displaying-hidden'));
+  }
 
   return {
     init: init,
