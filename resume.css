@@ -5,9 +5,9 @@ html {
 body {
 	font-family: garamond, adobe-garamond-pro, serif;
   font-size: 24px;
-  background-color: #eee;
 
-  color: #404044;
+  background-color: hsl(34, 34%, 94%);
+  color: hsl(230, 18%, 29%);
   
   margin: 0;
   height: 100%;
