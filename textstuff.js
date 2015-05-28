@@ -261,7 +261,7 @@ TextStuff.changeEditMode = function changeEditMode(editable, skipSave) {
     this.titleField.datum(editedNode);
 
     if (!skipSave) {
-      var docId = this.sprigot.opts.doc.id;
+      var docId = this.sprigot.getOpts().doc.id;
       getStoreForDoc(docId).saveSprigFromTreeNode(
         this.textcontent.datum(), docId
       );
@@ -300,7 +300,7 @@ TextStuff.respondToFormatsChange = function respondToFormatsChange() {
 };
 
 TextStuff.saveSprigFromFocusNode = function saveSprigFromFocusNode() {
-  var docId = this.sprigot.opts.doc.id;
+  var docId = this.sprigot.getOpts().doc.id;
   getStoreForDoc(docId).saveSprigFromTreeNode(this.graph.focusNode, docId);
 }
 

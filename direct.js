@@ -28,7 +28,7 @@ function setUpController(opts, done) {
     sprigController.init(done);
   }
   else {
-    sprigController.opts = opts;
+    sprigController.setOpts(opts);
     setTimeout(done, 0);
   }
 }

@@ -51,6 +51,7 @@ function createSprigot(opts) {
     loadATypeKit('//use.typekit.net/uoo5gyw.js', initDone);
   }
 
+  // TODO: Don't use sprigot ctor opts here. Ask for explicit opts in params.
   function load() {
     var rootId = getRootIdFromOpts(opts);
     Historian.init(graph.treeNav, rootId);
@@ -272,6 +273,14 @@ function createSprigot(opts) {
     }
   }
 
+  function setOpts(newOpts) {
+    opts = newOpts;
+  }
+
+  function getOpts() {
+    return opts;
+  }
+
   return {
     init: init,
     load: load,
@@ -284,7 +293,9 @@ function createSprigot(opts) {
     respondToMoveChildRightCmd: respondToMoveChildRightCmd,
     moveFocusNodeInDirection: moveFocusNodeInDirection,
     tagElementsWithCSSHackClasses: tagElementsWithCSSHackClasses,
-    opts: opts // TODO: Rewrite textstuff so it doesn't as for this.
+    controllerType: controllerType,
+    getOpts: getOpts, // TODO: Rewrite textstuff so it doesn't ask for this.
+    setOpts: setOpts
   };
 }
 

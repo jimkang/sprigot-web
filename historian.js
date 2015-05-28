@@ -29,12 +29,10 @@ Historian.syncURLToSprigId = function syncURLToSprigId(sprigId) {
     return;
   }
 
-  var docPath = this.docId + '/';
-  if (Settings.defaultDoc && this.docId === Settings.defaultDoc) {
-    docPath = '';
+  var newURL = location.protocol + '//' + location.host + location.pathname;
+  if (!Settings.defaultDoc || this.docId !== Settings.defaultDoc) {
+    newURL += '#/' + this.docId + '/' + sprigId;
   }
-  var newURL = location.protocol + '//' + location.host + location.pathname +
-    '#/' + docPath + sprigId;
 
   var hashParts = location.hash.split('?');
   if (hashParts.length > 1) { 
