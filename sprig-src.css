@@ -16,8 +16,7 @@ body {
 #svgBoard {
   border: 1px dotted rgba(224, 235, 255, 0.1);
   min-height: 400px;
-
-  flex-grow: 3;
+  width: 100%;
 }
 
 .arrowboard {
