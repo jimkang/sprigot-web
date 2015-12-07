@@ -26,9 +26,7 @@ smash: $(D3_LIBRARY_FILES)
 
 run: css
 	wzrd index.js -- \
-		-d \
-		-x lodash \
-		-x ./lib/d3-small.js
+		-d
 
 pch: smash # smash-debug
 	$(BIN)/browserify \
