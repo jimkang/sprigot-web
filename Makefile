@@ -1,7 +1,7 @@
 BIN = node_modules/.bin
 DEVTAGS = <script\ src="pch.js"><\/script><script\ src="index.js"><\/script>
 PRODUCTIONTAGS = <script\ src="sprigot-web.js"><\/script>
-PRODDIR = ../sprigotclient
+PRODDIR = ../sprigot
 
 test:
 	node tests/basictests.js
@@ -40,7 +40,7 @@ css:
 css-watch:
 	$(BIN)/myth --watch sprig-src.css sprig.css
 
-build: smash css
+build: smash
 	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m --keep-fnames -o sprigot-web.js
 
 build-unminified: smash css
