@@ -72,7 +72,7 @@ TextStuff.init = function init(sprigotSel, graph, treeRenderer, sprigot) {
     this.textcontent.on('click', this.startEditing.bind(this));
     this.titleField.on('click', this.startEditing.bind(this));
 
-    this.contentZoneStrokeRouter = createStrokeRouter(this.contentZone);
+    this.contentZoneStrokeRouter = createStrokeRouter(this.contentZone.node());
     this.contentZoneStrokeRouter.routeKeyDown('enter', ['meta'], 
       this.endEditing.bind(this));
     this.contentZoneStrokeRouter.absorbAllKeyUpEvents = true;

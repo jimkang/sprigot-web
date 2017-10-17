@@ -1,3 +1,4 @@
+var d3 = require('./lib/d3-small');
 var D3SprigBridge = require('./d3sprigbridge');
 
 // treerenderer is where the click events are actually set up.
@@ -132,7 +133,6 @@ function followPathToSprig(pathToSprig, delay, done) {
 }
 
 TreeNav.respondToDownArrow = function respondToDownArrow() {
-  d3.event.stopPropagation();
   if (this.nodeIsExpanded(this.graph.focusNode)) {
     this.followBranchOfNode(this.graph.focusNode);
   }
@@ -143,17 +143,14 @@ TreeNav.respondToDownArrow = function respondToDownArrow() {
 }
 
 TreeNav.respondToUpArrow = function respondToUpArrow() {
-  d3.event.stopPropagation();
   this.followParentOfNode(this.graph.focusNode);
 }
 
 TreeNav.respondToLeftArrow = function respondToLeftArrow() {
-  d3.event.stopPropagation();
   this.moveToSiblingNode(this.graph.focusNode, -1);
 }
 
 TreeNav.respondToRightArrow = function respondToRightArrow() {
-  d3.event.stopPropagation();
   this.moveToSiblingNode(this.graph.focusNode, 1);
 }
 

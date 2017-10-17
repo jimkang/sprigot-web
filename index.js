@@ -1,5 +1,5 @@
 var director = require('./direct');
 
-console.log('hey guy');
+// console.log('hey guy');
 
 director.init();

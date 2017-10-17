@@ -1,6 +1,4 @@
 BIN = node_modules/.bin
-DEVTAGS = <script\ src="pch.js"><\/script><script\ src="index.js"><\/script>
-PRODUCTIONTAGS = <script\ src="sprigot-web.js"><\/script>
 PRODDIR = ../sprigot
 
 test:
@@ -25,14 +23,8 @@ smash: $(D3_LIBRARY_FILES)
 	$(BIN)/smash $(D3_LIBRARY_FILES) > lib/d3-small.js
 
 run:
-	wzrd index.js -- \
+	wzrd index.js:sprigot-web.js -- \
 		-d
-
-pch: smash # smash-debug
-	$(BIN)/browserify \
-		-r ./lib/d3-small.js \
-		-r lodash \
-		-o pch.js
 
 css:
 	$(BIN)/myth sprig-src.css sprig.css
@@ -40,16 +32,16 @@ css:
 css-watch:
 	$(BIN)/myth --watch sprig-src.css sprig.css
 
-build: smash
+build:
 	$(BIN)/browserify index.js | $(BIN)/uglifyjs -c -m --keep-fnames -o sprigot-web.js
 
 build-unminified: smash css
 	$(BIN)/browserify index.js > sprigot-web.js
 
-switch-index-to-production:
-	sed 's/$(DEVTAGS)/$(PRODUCTIONTAGS)/' index.html | tee index.html
+run-built-app:
+	python -m SimpleHTTPServer
 
-deploy: build switch-index-to-production
+deploy:
 	cp sprigot-web.js $(PRODDIR) && \
 	cp *.css $(PRODDIR) && \
 	cp index.html $(PRODDIR) && \

@@ -30,7 +30,7 @@
     "lodash": "^3.6.0",
     "myth": "^1.4.0",
     "smash": "0.0.14",
-    "strokerouter": "^1.1.0",
+    "strokerouter": "^2.0.0",
     "uglify-js": "^2.4.17"
   }
 }

@@ -92,7 +92,7 @@ function createSprigot(opts) {
     if (TextStuff.editAvailable) {
       doc.on('click', TextStuff.endEditing.bind(TextStuff));
     }
-    docStrokeRouter = createStrokeRouter(doc);
+    docStrokeRouter = createStrokeRouter(window.document);
     docStrokeRouter.stopPropIfResponderFound = false;
 
     docStrokeRouter.routeKeyUp('escape', null, function stopEditing() {
