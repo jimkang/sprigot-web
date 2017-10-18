@@ -17,7 +17,7 @@
         "id": "llkGiyAj",
         "doc": "resume",
         "title": "Résumé",
-        "body": "Hi. I'm Jim Kang. I'm a software developer in Cambridge, Massachusetts. You can reach me at jimkang@gmail.com.<div><br></div><div>I've worked on products that were run by millions of users, but I also do a healthy amount of work with experimental code and executable art. Best practices have their place, but I think the exploration of uncharted paths is good for everything &mdash; engineering, art, and commerce.</div><div><br><div><div>This is a survey of my work. If you just want to go straight to my publicly available code,&nbsp;<a href=\"https://github.com/jimkang/?tab=repositories\">here are my Github repos</a>&nbsp;and my&nbsp;<a href=\"https://www.npmjs.com/~jimkang\">NPM packages</a>.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n</div></div></div>",
+        "body": "Hi. I'm Jim Kang. I'm a software developer in Cambridge, Massachusetts. You can reach me at jimkang@gmail.com.<div><br></div><div>I've worked on commercial products that were run by millions of users, as well as software that explores concepts, data, and art.</div><div><br><div><div>This document is an overview of my work. If you just want to go straight to my publicly available code,&nbsp;<a href=\"https://github.com/jimkang/?tab=repositories\">here are my Github repos</a>&nbsp;and my&nbsp;<a href=\"https://www.npmjs.com/~jimkang\">NPM packages</a>.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n</div></div></div>",
         "created": "2013-12-13T04:50:26.176Z",
         "modified": "2013-12-13T04:50:26.176Z",
         "tags": [
@@ -671,7 +671,7 @@
             "id": "sRIAcH7eH",
             "doc": "resume",
             "title": "Projects",
-            "body": "<div>Here are the projects I've done. They include web and iOS apps, Node apps that respond in real-time to Twitter streams, an interactive algorithm visualization, music processors, and Chrome extensions.</div><div><br></div><div>Like many people, I have more ideas than I can possibly see through in a lifetime, but I am committed to making as many of them real as I can.</div>",
+            "body": "<div>Here are the projects I've done. They include web and iOS apps, Node apps that respond in real-time to Twitter streams, an interactive algorithm visualization, music processors, and Chrome extensions.</div><div><br></div><div>Like everyone, I have more ideas than I can possibly see through in a lifetime, but I am committed to making as many of them real as I can.</div><div><strong>Update:</strong> This project list isn't quite up-to-date. <a href=\"http://jimkang.com/observatory/\">this visualization</a>, though a work in progress, is updated live, so you may want to look over there.",
             "emphasize": true,
             "created": "2013-12-18T14:05:59.333Z",
             "modified": "2013-12-18T14:05:59.333Z",
