@@ -305,7 +305,7 @@ TextStuff.saveSprigFromFocusNode = function saveSprigFromFocusNode() {
 }
 
 TextStuff.startEditing = function startEditing() {
-  d3.event.stopPropagation();
+  // d3.event.stopPropagation();
   if (!this.contentZone.classed('editing')) {
     this.changeEditMode(true);
   }

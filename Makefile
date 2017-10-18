@@ -44,5 +44,4 @@ run-built-app:
 deploy:
 	cp sprigot-web.js $(PRODDIR) && \
 	cp *.css $(PRODDIR) && \
-	cp index.html $(PRODDIR) && \
-	git checkout index.html
+	cp index.html $(PRODDIR)

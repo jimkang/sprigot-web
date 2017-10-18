@@ -11,6 +11,11 @@ var APIEnvoy = {
   queuesForIntervals: {}
 };
 
+
+window.dumpStore = function dumpStore() {
+  console.log(JSON.stringify(bakedStore, null, 2));
+}
+
 APIEnvoy.request = function request(jsonBody, done) {
   if (jsonBody.getDocReq.op === 'getDoc') {
     setTimeout(passDoc);
@@ -62,5 +67,6 @@ APIEnvoy.request = function request(jsonBody, done) {
 
 return APIEnvoy;
 }
+
 
 module.exports = createAPIEnvoy;
