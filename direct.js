@@ -9,8 +9,8 @@ var sprigController;
 var initialTargetSprigId;
 var rootId;
 
-var resumeMode = true;
-// var resumeMode = false;
+// var resumeMode = true;
+var resumeMode = false;
 
 function setUpController(opts, done) {
   var expectedType = opts.format ? opts.format : 'sprigot';

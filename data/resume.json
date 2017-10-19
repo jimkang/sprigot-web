@@ -56,7 +56,7 @@
                     "id": "spotify",
                     "doc": "resume",
                     "title": "Spotify",
-                    "body": "I currently work at <a href=\"https://spotify.com/\">Spotify</a> on a team that builds music recommendations. Some products we've built are the automated <a href=\"https://open.spotify.com/user/spotify/playlist/37i9dQZF1DZ06evO1Mfhq8\">This Is</a> <a href=\"https://open.spotify.com/user/spotify/playlist/37i9dQZF1DZ06evO12mjqo\">playlists</a> (greatest hits playlists for artists that stay fresh by updating daily based on listening patterns) and <a href=\"https://timecapsule.spotify.com/\">Time Capsule</a>. Some things I build:<br /><br /><ul><li>Internal apps (web apps, Chrome extensions, Electron apps) for evaluating and adjusting algorithmically-generated content</li><li>The occasional prototype for potential new experiences</li><li>External promotional web sites</li><li>A process that analyzes and composes 2500+ images each day</li><li>External promotional web sites</li><li>Qualitative user surveys</ul><p>The job involves traditional full-stack web development (JS, CSS, nginx, Node, Python), but much of the work navigating a very unique infrastructure. Spotify makes significant usage of protocols that aren't http, containerizes extensively, and is on the Google Cloud platform for example.</p>",
+                    "body": "I currently work at <a href=\"https://spotify.com/\">Spotify</a> on a team that builds music recommendations. Some products we've built are the automated <a href=\"https://open.spotify.com/user/spotify/playlist/37i9dQZF1DZ06evO1Mfhq8\">This Is</a> <a href=\"https://open.spotify.com/user/spotify/playlist/37i9dQZF1DZ06evO12mjqo\">playlists</a> (greatest hits playlists for artists that stay fresh by updating daily based on listening patterns) and <a href=\"https://timecapsule.spotify.com/\">Time Capsule</a>. Some things I build:<br /><br /><ul><li>Internal apps (web apps, Chrome extensions, Electron apps) for evaluating and adjusting algorithmically-generated content</li><li>The occasional prototype for potential new products</li><li>External promotional web sites</li><li>A process that analyzes and composes 2500+ images each day</li><li>External promotional web sites</li><li>Qualitative user surveys</ul><p>The job involves traditional full-stack web development (JS, CSS, nginx, Node, Python), but much of the work navigating a very unique infrastructure. Spotify makes significant usage of protocols that aren't http, containerizes extensively, and is on the Google Cloud platform for example.</p>",
                     "created": "2017-01-24T00:03:52.622Z",
                     "modified": "2017-01-24T00:03:52.622Z",
                     "tags": [
@@ -88,7 +88,7 @@
                     "id": "s0VEAY0Or",
                     "doc": "resume",
                     "title": "Modo Labs",
-                    "body": "The company built mobile apps for big institutions like universities and handled wrapping up their existing data sources to make them easily mobile-consumable.<div><br></div><div>Mostly, I worked on iOS apps, with some web service development here and there. In addition to bread-and-butter Cocoa Touch development, we explored Core Animation, automating media file encryption, and web view-centric native apps.</div>",
+                    "body": "The company built mobile apps for big institutions like universities and handled wrapping up their existing data sources to make them easily mobile-consumable.<div><br></div><div>Mostly, I worked on iOS apps, with some web service development here and there..</div>",
                     "created": "2013-12-13T23:13:47.546Z",
                     "modified": "2013-12-13T23:13:47.546Z",
                     "tags": [
@@ -155,7 +155,7 @@
                     "id": "siQd4ALlV",
                     "doc": "resume",
                     "title": "InstallShield",
-                    "body": "This is where I learned to write code that worked in real-world situations when run by&nbsp;thousands (millions in a few cases) of real users.&nbsp;I worked on a team that built a few different SKUs of an IDE that let developers author \"setups,\" programs that installed their software onto computers.<div><br></div><div>The IDE was a Windows application written in C++.</div>",
+                    "body": "This is where I learned to write code that worked in real-world situations when run by&nbsp;thousands (millions in a few cases) of real users. I worked on a team that built a few different SKUs of an IDE that let developers author \"setups,\" programs that installed their software onto computers.<div><br></div><div>The IDE was a Windows application written in C++.</div>",
                     "created": "2013-12-14T04:45:29.014Z",
                     "modified": "2013-12-14T04:45:29.014Z",
                     "tags": [
@@ -189,7 +189,7 @@
             "id": "siwPPlnbm",
             "doc": "resume",
             "title": "Perspective",
-            "body": "Here are my main principles for building software:<br /><br /><ul><li>Write tests. Write enough to easily tell if something is broken when you change it but not so much that the tests become a burden unto themselves. Change program code to be more testable instead of making tests extremely elaborate.</li><li>Try to stick to code and tools you understand, even in third-party libraries. Sometimes, that can't be helped, but you will likely be forced to understand code you used later under pressure if you don't understand it now.</li><li>Make sure the code you're considering writing is actually necessary.</li></ul>",
+            "body": "Here are my main principles for building software:<br /><br /><ul><li>Write tests. Write enough to easily tell if something is broken when you change it but not so much that the tests become a burden unto themselves. Change program code to be more testable instead of making tests extremely elaborate.</li><li>Try to stick to code and tools you understand, even in third-party libraries. Sometimes, that can't be helped, but if you don't understand the code while you're building the feature, you will likely be forced to understand that code later&mdash;under pressure&mdash;while debugging a bug that made it to production.</li><li>Make sure the code you're considering writing is actually necessary.</li></ul>",
             "created": "2015-04-27T15:49:03.073Z",
             "modified": "2015-04-27T15:49:03.073Z",
             "tags": [
