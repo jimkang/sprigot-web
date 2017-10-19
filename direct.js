@@ -9,13 +9,16 @@ var sprigController;
 var initialTargetSprigId;
 var rootId;
 
+// var resumeMode = true;
+var resumeMode = false;
+
 function setUpController(opts, done) {
   var expectedType = opts.format ? opts.format : 'sprigot';
 
   if (!sprigController || 
     sprigController.controllerType !== expectedType) {
 
-    if (opts.format === 'bloge') {
+    if (resumeMode || opts.format === 'bloge') {
       sprigController = createSpriglog(opts);
     }
     else if (opts.format === 'newdoc') {
@@ -47,6 +50,9 @@ function direct(locationHash) {
     // be loaded before deciding which controller to use.
     rootId = getRootIdFromPathSegments(pathSegments);
     if (isLegacy(rootId)) {
+      if (resumeMode) {
+        rootId = 'resume';
+      }
       legacyStore.getDoc(rootId, setUpControllerWithDoc);
     }
     else {

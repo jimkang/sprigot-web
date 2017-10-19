@@ -1,5 +1,6 @@
 BIN = node_modules/.bin
 PRODDIR = ../sprigot
+RESUMEDIR = ../resume
 
 test:
 	node tests/basictests.js
@@ -45,3 +46,9 @@ deploy:
 	cp sprigot-web.js $(PRODDIR) && \
 	cp *.css $(PRODDIR) && \
 	cp index.html $(PRODDIR)
+
+deploy-resume:
+	echo "Make sure you've first built with resumeMode = true in direct.js!"
+	cp sprigot-web.js $(RESUMEDIR) && \
+	cp *.css $(RESUMEDIR) && \
+	cp index.html $(RESUMEDIR)

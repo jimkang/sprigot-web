@@ -1380,7 +1380,7 @@
             "id": "sOcQEejyY",
             "doc": "resume",
             "title": "Keywords!",
-            "body": "For better or worse, a lot of people look for this in a résumé. So, here it is:<div><br></div><div><div>- JavaScript</div><div>- Mostly functional, closure-centric programming</div><div>- Problems and benefits of prototypal inheritance</div><div>- Node.js<br></div><div>- Test-driven development</div><div>- Modular architecture</div><div>- LevelDB</div><div>- NPM</div><div>- CSS 3, Flexbox, animations</div><div>- Browserify<br></div><div>- Objective-C</div><div>- Git, Git Flow</div><div>- Tape, Mocha</div><div>- Backbone.js</div><div>- C++</div></div><div>- SQL</div><div>- HTML (v1-5)</div><div>- At least a 1X engineer, maybe even 1.1X</div>",
+            "body": "For better or worse, a lot of people look for this in a résumé. So, here it is:<div><br></div><div><div>- JavaScript</div><div>- Mostly functional, closure-centric programming</div><div>- Problems and benefits of prototypal inheritance</div><div>- Node.js<br></div><div>- Test-driven development</div><div>- Modular architecture</div><div>- LevelDB</div><div>- NPM</div><div>- CSS 3, Flexbox, animations</div><div>- Browserify<br></div><div>- Objective-C</div><div>- Git, Git Flow</div><div>- Tape, Mocha</div><div>- D3</div><div>- C++</div></div><div>- SQL</div><div>- HTML (v1-5)</div><div>- At least a 1X engineer, maybe even 1.1X</div>",
             "emphasize": true,
             "created": "2015-04-27T17:57:21.982Z",
             "modified": "2015-04-27T17:57:21.982Z",
