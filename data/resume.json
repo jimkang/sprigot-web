@@ -69,7 +69,7 @@
                     "id": "sGjOzWVjK",
                     "doc": "resume",
                     "title": "PayPal",
-                    "body": "I worked at PayPal on the&nbsp;<a href=\"https://www.paypal.com/deals/\">Shop</a>&nbsp;team.<div><br></div><div>The Shop site serves coupons from various PayPal partners to hundreds of thousands of people per day. The front end is a single-page app built in AngularJS. The back end is a cluster of NodeJS servers that talk to various PayPal services to manage the coupon and user information.</div><div><br></div><div>We used TDD, pair programming, and Git Flow very heavily. And, perhaps less effectively, Scrum.</div><div><br></div>",
+                    "body": "I worked at PayPal on the&nbsp;<a href=\"https://www.paypal.com/deals/\">Shop</a>&nbsp;team.<div><br></div><div>The Shop site serves coupons from various PayPal partners to hundreds of thousands of people per day. The front end is a single-page app built in AngularJS. The back end is a cluster of NodeJS servers that talk to various PayPal services to manage the coupon and user information.</div><div><br></div><div>We used TDD, pair programming, and Git Flow very heavily.  We prioritized the mobile web experience, which I've taken to heart ever since. And, perhaps less effectively, Scrum.</div><div><br></div>",
                     "created": "2015-04-16T20:03:52.622Z",
                     "modified": "2015-04-16T20:03:52.622Z",
                     "tags": [
