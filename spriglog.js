@@ -4,6 +4,7 @@ var Historian = require('./historian');
 var getStoreForDoc = require('./get-store');
 var D3SprigBridge = require('./d3sprigbridge');
 var accessor = require('accessor');
+var d3 = require('./lib/d3-small');
 
 function createSpriglog(opts) {
   // Expected in opts: doc, loadDone.
