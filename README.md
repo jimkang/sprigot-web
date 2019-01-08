@@ -1,8 +1,7 @@
 sprigot-web
 ==================
 
-This is the web app for [Sprigot](http://sprigot.com). Apologies – it is halfway through a rewrite after a year of dormancy, so things are not all that consistent.
-
+This is the web app for [Sprigot](https://jimkang.com/sprigot).
 Installation
 ------------
 
