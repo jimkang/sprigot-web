@@ -98,8 +98,22 @@ Graph.init = function init(sprigotSel, camera, treeRenderer,
     setTimeout(expandGraphPane.bind(this), 100);
   }
 
+  // Need to wait a little while for body size to update before
+  // using it.
+  setTimeout(setBoardHeight.bind(this), 400);
+
   function expandGraphPane() {
     this.paneShifter.syncToState('fully-expanded');
+  }
+
+  function setBoardHeight() {
+    var boardHeight = document.body.getBoundingClientRect().height - 40;
+    if (boardHeight < 320) {
+      boardHeight = 320;
+    }
+
+    this.board.attr('height', boardHeight);
+    d3.select('#background').attr('height', boardHeight);
   }
 
   return this;
