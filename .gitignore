@@ -3,3 +3,4 @@ node_modules
 lib/d3-small.js
 pch.js
 sprigot-web.js
+config.mk

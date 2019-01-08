@@ -1,3 +1,8 @@
+include config.mk
+
+HOMEDIR = $(shell pwd)
+APPDIR = $(HTMLDIR)/sprigot
+
 BIN = node_modules/.bin
 PRODDIR = ../sprigot
 RESUMEDIR = ../resume
@@ -42,13 +47,14 @@ build-unminified: smash css
 run-built-app:
 	python -m SimpleHTTPServer
 
-deploy:
-	cp sprigot-web.js $(PRODDIR) && \
-	cp *.css $(PRODDIR) && \
-	cp index.html $(PRODDIR)
-
 deploy-resume:
 	echo "Make sure you've first built with resumeMode = true in direct.js!"
 	cp sprigot-web.js $(RESUMEDIR) && \
 	cp *.css $(RESUMEDIR) && \
 	cp index.html $(RESUMEDIR)
+
+sync:
+	rsync -a $(HOMEDIR)/ $(USER)@$(SERVER):/$(APPDIR) --exclude node_modules/ \
+		--omit-dir-times --no-perms
+	scp lib/d3.v3.min.js $(USER)@$(SERVER):$(APPDIR)
+
